@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
+        <a class="text-xl font-bold text-white hover:text-gray-300 ml-2" href="{{route('dashboard')}}">CoTasker</a>
+        <h2 class="text-white text-xl font-bold ml-4 dark:text-gray-800">
+            {{ __('Tu Cuenta') }}
         </h2>
     </x-slot>
 

@@ -2,24 +2,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-family: 'Roboto', sans-serif;
 }
 .content {
     flex: 1;
 }
-.navbar {
-    background-color: #003772;
-}
-.navbar a, button {
-    color: #ffffff;
-}
-.navbar button:hover {
-    color: #cacaca;
-}
-.navbar a:hover {
-    color: #cacaca;
-}
-
 .btn-primary {
     background-color: #28a745;
     border-color: #28a745;
