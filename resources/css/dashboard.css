@@ -8,17 +8,12 @@ body {
 }
 .btn-primary {
     background-color: #28a745;
-    border-color: #28a745;
     color: white;
+    transition: 0.3s;
 }
-.btn-outline-primary {
-    border-color: #28a745;
-    color: #28a745;
-}
-.btn-outline-primary:hover {
-    background-color: #28a745;
-    border-color: #28a745;
-    color: #ffffff;
+.btn-primary:hover {
+    background-color: #25963f;
+    transition: 0.3s;
 }
 .card {
     transition: transform 0.3s ease;

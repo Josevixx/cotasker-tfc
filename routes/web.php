@@ -11,8 +11,10 @@ Route::get('/', function () {
 
 // Rutas protegidas por autenticación
 Route::middleware(['auth', 'verified'])->group(function () {
-
+    // Ruta para el dashboard donde se muestran los equipos
     Route::get('/dashboard', [TeamController::class, 'index'])->name('dashboard');
+
+    // Ruta para crear un nuevo equipo
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
     
     // Ruta para cerrar sesión
@@ -20,6 +22,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('auth')
         ->name('logout');
 });
+
+// Ruta para unirse a un equipo
+Route::post('/teams/join', [TeamController::class, 'join'])->name('teams.join');
 
 // Rutas del perfil de usuario (opcional)
 Route::middleware('auth')->group(function () {
@@ -29,3 +34,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+

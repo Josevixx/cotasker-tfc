@@ -28,19 +28,44 @@
         </div>
     </nav>
 
-    <header class="bg-white text-center py-10 shadow-md">
-        <div class="container mx-auto">
-            <h1 class="text-3xl font-bold">Bienvenido a CoTasker</h1>
-            <p class="text-gray-600 mt-2">Organiza tus equipos de trabajo y gestiona tus tareas de manera eficiente.</p>
-            <div class="mt-4">
-                <button onclick="document.getElementById('createTeamModal').style.display='block'"
-                    class="btn-primary px-4 py-2 rounded">
-                    Crear un Equipo
-                </button>
+    <header class="bg-white py-10 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Sección de bienvenida centrada -->
+            <div class="flex-1 text-center">
+                <h1 class="text-3xl font-bold">Bienvenido a CoTasker</h1>
+                <p class="text-gray-600 mt-2">Organiza tus equipos de trabajo y gestiona tus tareas de manera eficiente.</p>
+                <div class="mt-4">
+                    <button onclick="document.getElementById('createTeamModal').style.display='block'" 
+                        class="btn-primary px-4 py-2 rounded">
+                        Crear un Equipo
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Formulario para unirse a un equipo alineado a la derecha, más pequeño -->
+            <div class="w-1/4 bg-white p-6 ml-6 shadow-md rounded-lg">
+                <h2 class="text-xl font-bold mb-4">Unirse a un Equipo</h2>
+                @if(session('error'))
+                    <p class="text-red-500">{{ session('error') }}</p>
+                @endif
+                @if(session('success'))
+                    <p class="text-green-500">{{ session('success') }}</p>
+                @endif
+                <form action="{{ route('teams.join') }}" method="POST">
+                    @csrf
+                    <input type="text" placeholder="Código de equipo" name="join_code" required class="w-full px-4 py-2 border rounded-lg mt-2">
+                    <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg mt-4 hover:bg-blue-700 transition duration-300">
+                        Unirse
+                    </button>
+                </form>
             </div>
         </div>
     </header>
+    
+    
 
+    
+    
 
     <section class="container mx-auto my-10 mb-20 content">
         <h2 class="text-2xl font-bold mb-4">Tus Equipos</h2>
