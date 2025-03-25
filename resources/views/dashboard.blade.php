@@ -9,26 +9,38 @@
 </head>
 
 <body class="bg-gray-100">
-    <nav class="navbar shadow bg-[#003772] sticky top-0 z-50">
+    <nav class="navbar bg-[#003772] sticky top-0 mx-0 shadow-md">
         <div class="container mx-auto flex items-center justify-between p-4 text-white">
-            <a class="text-xl font-bold hover:text-gray-300" href="#">CoTasker</a>
-            <div class="hidden md:flex space-x-4">
-                <a class="hover:text-gray-300" href="#">Inicio</a>
-                <a class="hover:text-gray-300" href="#">Mis Equipos</a>
+            <!-- Logo -->
+            <a class="text-xl font-bold" href="#">CoTasker</a>
+    
+            <!-- Menú principal -->
+            <div class="hidden md:flex space-x-6">
+                <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300" href="#">Inicio</a>
+                <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300" href="#">Mis Equipos</a>
             </div>
-            <div class="hidden md:flex space-x-4">
-                <a class="flex items-center hover:text-gray-300" href="{{ route('profile.edit') }}">
-                    <span class="mr-2">&#128100;</span> Perfil
+    
+            <!-- Menú usuario -->
+            <div class="hidden md:flex space-x-6">
+                <a class="relative flex items-center group" href="{{ route('profile.edit') }}">
+                    <span class="mr-2">&#128100;</span>
+                    <span class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300">Perfil</span>
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button class="hover:text-gray-300" type="submit">Cerrar Sesión</button>
+                    <button class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300" type="submit">
+                        Cerrar Sesión
+                    </button>
                 </form>
             </div>
         </div>
     </nav>
+    
+    
 
-    <header class="bg-white py-10 shadow-md">
+    <br>
+
+    <header class="bg-white py-10 shadow-md rounded-3xl mx-20">
         <div class="container mx-auto flex justify-between items-center">
             <!-- Sección de bienvenida centrada -->
             <div class="flex-1 text-center">
@@ -43,7 +55,7 @@
             </div>
     
             <!-- Formulario para unirse a un equipo alineado a la derecha, más pequeño -->
-            <div class="w-1/4 bg-white p-6 ml-6 shadow-md rounded-lg">
+            <div class="w-1/4 bg-white p-6 ml-6 ring-4 rounded-lg">
                 <h2 class="text-xl font-bold mb-4">Unirse a un Equipo</h2>
                 @if(session('error'))
                     <p class="text-red-500">{{ session('error') }}</p>
@@ -61,11 +73,6 @@
             </div>
         </div>
     </header>
-    
-    
-
-    
-    
 
     <section class="container mx-auto my-10 mb-20 content">
         <h2 class="text-2xl font-bold mb-4">Tus Equipos</h2>

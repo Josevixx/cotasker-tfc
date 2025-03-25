@@ -19,7 +19,7 @@ body {
     transition: transform 0.3s ease;
 }
 .card:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 footer {
     background-color: #003772;
