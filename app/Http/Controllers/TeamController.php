@@ -23,17 +23,16 @@ class TeamController extends Controller
         ]);
 
         // Redirigir o retornar algún tipo de respuesta
-        return redirect()->route('dashboard.index')->with('success', 'Equipo creado con éxito.');
+        return redirect()->route('dashboard')->with('success', 'Equipo creado con éxito.');
 
     }
 
     public function index() {
-        // Obtener los equipos del usuario autenticado
+
         $teams = Team::where('owner_id', auth()->id())->get() ?? collect([]);
 
-    
-        // Pasar los equipos a la vista
         return view('dashboard', compact('teams'));
+
     }
     
 

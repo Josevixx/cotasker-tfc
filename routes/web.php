@@ -10,12 +10,10 @@ Route::get('/', function () {
 })->name('welcome');
 
 // Rutas protegidas por autenticación
-Route::middleware(['auth'])->group(function () {
-    // Ruta para almacenar un nuevo equipo
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/dashboard', [TeamController::class, 'index'])->name('dashboard');
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
-    
-    // Ruta para acceder al dashboard, que llama al método 'index' de TeamController
-    Route::get('/dashboard', [TeamController::class, 'index'])->name('dashboard.index');
     
     // Ruta para cerrar sesión
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])

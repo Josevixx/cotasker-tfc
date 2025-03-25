@@ -57,14 +57,14 @@
             <p class="text-gray-600">No tienes equipos creados aún.</p>
         @endif
 
+
     </section>
 
 
 
     <!-- MODAL PARA CREAR EQUIPO -->
-    <div id="createTeamModal" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50"
-        style="display:none;">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+    <div id="createTeamModal" class="fixed inset-0 justify-items-center z-50 bg-gray-900 bg-opacity-50" style="display:none;">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-20 mt-[140px]">
             <h2 class="text-xl font-semibold mb-4">Crear Nuevo Equipo</h2>
 
             <form action="{{ route('teams.store') }}" method="POST">
