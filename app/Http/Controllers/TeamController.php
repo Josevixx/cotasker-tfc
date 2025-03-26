@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class TeamController extends Controller
 {
@@ -50,19 +51,33 @@ class TeamController extends Controller
         return redirect()->route('dashboard')->with('success', 'Te has unido al equipo correctamente.');
     }
 
-    public function show(Team $team) {
+    public function show(Team $team)
+    {
         // Verificar si el usuario pertenece al equipo
         if (!$team->users->contains(auth()->id()) && $team->owner_id !== auth()->id()) {
             return redirect()->route('dashboard')->with('error', 'No tienes acceso a este equipo.');
         }
-    
+
         $owner = $team->owner; // Obtener el dueño del equipo
         $members = $team->users->where('id', '!=', $team->owner_id); // Filtrar miembros sin incluir al dueño
-    
+
         return view('team', compact('team', 'owner', 'members'));
     }
-    
-    
+
+    public function kick(Team $team, User $user)
+    {
+        // Verificar si el usuario autenticado es el dueño del equipo
+        if ($team->owner_id !== auth()->id()) {
+            return redirect()->route('teams.show', $team->name)->with('error', 'No tienes permiso para expulsar miembros.');
+        }
+
+        // Eliminar la relación entre el equipo y el usuario
+        $team->users()->detach($user->id);
+
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('teams.show', $team->name)->with('success', 'Miembro expulsado correctamente.');
+    }
+
 
     public function index()
     {

@@ -18,7 +18,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
 
     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
-    
+
+    // Ruta para expulsar un miembro del equipo
+    Route::delete('/teams/{team}/kick/{user}', [TeamController::class, 'kick'])->name('teams.kick');
+
     // Ruta para cerrar sesión
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->middleware('auth')
@@ -35,5 +38,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
