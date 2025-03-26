@@ -28,7 +28,6 @@ class TeamController extends Controller
         return redirect()->route('dashboard')->with('success', 'Equipo creado con éxito.');
     }
 
-
     public function join(Request $request)
     {
         // Validación del código de equipo
@@ -51,7 +50,19 @@ class TeamController extends Controller
         return redirect()->route('dashboard')->with('success', 'Te has unido al equipo correctamente.');
     }
 
-
+    public function show(Team $team) {
+        // Verificar si el usuario pertenece al equipo
+        if (!$team->users->contains(auth()->id()) && $team->owner_id !== auth()->id()) {
+            return redirect()->route('dashboard')->with('error', 'No tienes acceso a este equipo.');
+        }
+    
+        $owner = $team->owner; // Obtener el dueño del equipo
+        $members = $team->users->where('id', '!=', $team->owner_id); // Filtrar miembros sin incluir al dueño
+    
+        return view('team', compact('team', 'owner', 'members'));
+    }
+    
+    
 
     public function index()
     {
@@ -65,8 +76,5 @@ class TeamController extends Controller
         // Pasar los equipos a la vista
         return view('dashboard', compact('teams'));
     }
-
-
-
 
 }

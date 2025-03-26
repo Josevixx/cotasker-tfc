@@ -16,6 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Ruta para crear un nuevo equipo
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
+
+    Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
     
     // Ruta para cerrar sesión
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])

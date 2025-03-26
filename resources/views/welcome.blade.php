@@ -28,7 +28,7 @@
     <header class="hero">
         <h1 class="text-3xl font-bold">Organiza tu trabajo en equipo de manera eficiente</h1>
         <p class="text-lg mt-4">Gestiona tareas, colabora con tu equipo y alcanza tus objetivos.</p>
-        <a href="#"
+        <a href="{{ route('register') }}"
             class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded text-lg mt-6 inline-block">Empieza
             Gratis</a>
     </header>

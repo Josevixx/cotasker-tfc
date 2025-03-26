@@ -1,34 +1,75 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title>{{ config('app.name', 'CoTasker') }}</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="antialiased">
-        <div class="bg-gray-100 dark:bg-gray-900">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-[#003772] dark:bg-white shadow">
-                    <div class="container mx-auto flex items-center justify-between p-4">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 
-            <main>
+<body class="antialiased">
+    <div class="bg-gray-100 dark:bg-gray-900">
+
+        <nav class="navbar bg-[#003772] sticky top-0 mx-0 shadow-md">
+            <div class="container mx-auto flex items-center justify-between p-4 text-white">
+                <!-- Logo -->
+                <a class="text-xl font-bold" href="{{ route('dashboard')}}">CoTasker</a>
+
+                <!-- Menú principal -->
+                <div class="hidden md:flex space-x-6">
+                    <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+                        href="{{ route('dashboard')}}">Inicio</a>
+                    <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+                        href="{{ route('dashboard')}}">Mis Equipos</a>
+                </div>
+
+                <!-- Menú usuario -->
+                <div class="hidden md:flex space-x-6">
+                    <a class="relative flex items-center group" href="{{ route('profile.edit') }}">
+                        <span class="mr-2">&#128100;</span>
+                        <span
+                            class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300">Perfil</span>
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button
+                            class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+                            type="submit">
+                            Cerrar Sesión
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            @if(isset($slot))
                 {{ $slot }}
-            </main>
-        </div>
-    </body>
+            @else
+                @yield('content')
+            @endif
+
+        </main>
+
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
+        <ul class="flex justify-center space-x-4 mt-2">
+            <li><a href="#" class="hover:underline">Términos y Condiciones</a></li>
+            <li><a href="#" class="hover:underline">Política de Privacidad</a></li>
+            <li><a href="#" class="hover:underline">Contacto</a></li>
+        </ul>
+    </footer>
+</body>
+
 </html>
