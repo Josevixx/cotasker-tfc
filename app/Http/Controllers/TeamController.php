@@ -78,6 +78,18 @@ class TeamController extends Controller
         return redirect()->route('teams.show', $team->name)->with('success', 'Miembro expulsado correctamente.');
     }
 
+    public function destroy($id)
+{
+    $team = Team::findOrFail($id);
+
+    // Verificar que el usuario es el dueño del equipo
+    if (auth()->user()->id === $team->owner_id) {
+        $team->delete();
+        return redirect()->route('dashboard')->with('success', 'Equipo eliminado correctamente.');
+    }
+
+    return redirect()->route('teams.show', $id)->with('error', 'No tienes permisos para eliminar este equipo.');
+}
 
     public function index()
     {

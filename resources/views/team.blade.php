@@ -9,6 +9,13 @@
             <div class="w-3/5 bg-white shadow-lg rounded-lg p-8">
                 <h1 class="text-4xl font-bold ">{{ $team->name }}</h1>
                 <p class="text-gray-600  mt-2">{{ $team->description }}</p>
+
+                @if(auth()->user()->id === $team->owner_id)
+                    <div class="mt-4">
+                        <p class="font-semibold text-lg">Código de invitación: <span
+                                class="text-blue-500">{{ $team->join_code }}</span></p>
+                    </div>
+                @endif
             </div>
 
             <!-- Lista de Miembros -->
@@ -32,7 +39,8 @@
                                     class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs">
+                                    <button type="submit"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs">
                                         Expulsar
                                     </button>
                                 </form>
@@ -42,6 +50,29 @@
                 </ul>
 
             </div>
+            <!-- Agregar después de la lista de miembros -->
+            @if(auth()->user()->id === $team->owner_id) <!-- Solo el admin puede eliminar el equipo -->
+                <div class="mt-6 flex justify-end">
+                    <form id="delete-team-form" action="{{ route('teams.destroy', $team->id) }}" method="POST"
+                        style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                    <button onclick="confirmDelete()" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700">
+                        Eliminar equipo
+                    </button>
+                </div>
+            @endif
+
+            <script>
+            function confirmDelete() {
+                if (confirm('¿Estás seguro de que quieres eliminar este equipo? Esta acción no se puede deshacer.')) {
+                    document.getElementById('delete-team-form').submit();
+                }
+            }
+            </script>
+            
+
         </div>
     </div>
 

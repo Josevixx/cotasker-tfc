@@ -14,22 +14,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Ruta para el dashboard donde se muestran los equipos
     Route::get('/dashboard', [TeamController::class, 'index'])->name('dashboard');
 
-    // Ruta para crear un nuevo equipo
+    // Rutas para la creación, visualización y eliminación de equipos
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
-
+    Route::post('/teams/join', [TeamController::class, 'join'])->name('teams.join');
     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
-
-    // Ruta para expulsar un miembro del equipo
     Route::delete('/teams/{team}/kick/{user}', [TeamController::class, 'kick'])->name('teams.kick');
+    Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
 
     // Ruta para cerrar sesión
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->middleware('auth')
         ->name('logout');
 });
-
-// Ruta para unirse a un equipo
-Route::post('/teams/join', [TeamController::class, 'join'])->name('teams.join');
 
 // Rutas del perfil de usuario (opcional)
 Route::middleware('auth')->group(function () {

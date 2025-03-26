@@ -63,12 +63,6 @@
             <!-- Formulario para unirse a un equipo alineado a la derecha, más pequeño -->
             <div class="w-1/4 bg-white p-6 ml-6 ring-4 rounded-lg">
                 <h2 class="text-xl font-bold mb-4">Unirse a un Equipo</h2>
-                @if(session('error'))
-                    <p class="text-red-500">{{ session('error') }}</p>
-                @endif
-                @if(session('success'))
-                    <p class="text-green-500">{{ session('success') }}</p>
-                @endif
                 <form action="{{ route('teams.join') }}" method="POST">
                     @csrf
                     <input type="text" placeholder="Código de equipo" name="join_code" required
@@ -87,7 +81,7 @@
         @if ($teams->isNotEmpty())
             <div class="grid md:grid-cols-3 gap-6">
                 @foreach($teams as $team)
-    <div class="card p-4 bg-white shadow-md rounded-lg flex justify-between items-center">
+    <div class="card p-5 bg-white shadow-md rounded-lg flex justify-between items-center">
         <div>
             <a href="{{ route('teams.show', $team->id) }}" class="text-xl font-bold text-blue-600 hover:underline">
                 {{ $team->name }}
@@ -95,7 +89,7 @@
             <p class="text-gray-600">{{ $team->description }}</p>
         </div>
         <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full">
-            <span class="text-lg font-semibold text-gray-700">{{ $team->users->count() +1 /* Se añade uno para que cuente al administrador del equipo */ }}</span>
+            <span class="text-lg font-semibold text-gray-700">{{ $team->users->count() }}</span>
             <span class="text-xl">👥</span>
         </div>
     </div>
