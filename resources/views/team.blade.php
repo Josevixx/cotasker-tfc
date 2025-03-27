@@ -33,7 +33,7 @@
                     @foreach($members as $member)
                         <li class="flex justify-between items-center py-3 text-gray-800 font-medium ">
                             {{ $member->name }} ({{ $member->email }})
-                            <!-- Mostrar el botón de expulsar solo al admin -->
+                            <!-- Botón de Expulsar -->
                             @if($owner->id === auth()->id())
                                 <form method="POST" action="{{ route('teams.kick', ['team' => $team->id, 'user' => $member->id]) }}"
                                     class="inline">
@@ -50,8 +50,8 @@
                 </ul>
 
             </div>
-            <!-- Agregar después de la lista de miembros -->
-            @if(auth()->user()->id === $team->owner_id) <!-- Solo el admin puede eliminar el equipo -->
+            <!-- Eleminar Equipo -->
+            @if(auth()->user()->id === $team->owner_id) 
                 <div class="mt-6 flex justify-end">
                     <form id="delete-team-form" action="{{ route('teams.destroy', $team->id) }}" method="POST"
                         style="display: none;">

@@ -25,6 +25,7 @@
         </div>
     </nav>
 
+    <!-- Header -->
     <header class="hero">
         <h1 class="text-3xl font-bold">Organiza tu trabajo en equipo de manera eficiente</h1>
         <p class="text-lg mt-4">Gestiona tareas, colabora con tu equipo y alcanza tus objetivos.</p>
@@ -33,6 +34,7 @@
             Gratis</a>
     </header>
 
+    <!-- Seccion de Información -->
     <section class="container mx-auto my-16 text-center">
         <h2 class="text-3xl font-bold mb-6">¿Cómo funciona?</h2>
         <div class="grid md:grid-cols-3 gap-8">
@@ -54,6 +56,7 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-[#003772] text-white text-center py-6 mt-auto">
         <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
         <ul class="flex justify-center space-x-4 mt-2">

@@ -41,13 +41,11 @@
         </div>
     </nav>
 
-
-
     <br>
 
     <header class="bg-white py-10 shadow-md rounded-3xl mx-20">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- Sección de bienvenida centrada -->
+            <!-- Sección de bienvenida -->
             <div class="flex-1 text-center">
                 <h1 class="text-3xl font-bold">Bienvenido a CoTasker</h1>
                 <p class="text-gray-600 mt-2">Organiza tus equipos de trabajo y gestiona tus tareas de manera eficiente.
@@ -76,26 +74,26 @@
         </div>
     </header>
 
+    <!-- Cajas de los equipos -->
     <section class="container mx-auto my-10 mb-20 content">
         <h2 class="text-2xl font-bold mb-4">Tus Equipos</h2>
         @if ($teams->isNotEmpty())
             <div class="grid md:grid-cols-3 gap-6">
                 @foreach($teams as $team)
-    <div class="card p-5 bg-white shadow-md rounded-lg flex justify-between items-center">
-        <div>
-            <a href="{{ route('teams.show', $team->id) }}" class="text-xl font-bold text-blue-600 hover:underline">
-                {{ $team->name }}
-            </a>
-            <p class="text-gray-600">{{ $team->description }}</p>
-        </div>
-        <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full">
-            <span class="text-lg font-semibold text-gray-700">{{ $team->users->count() }}</span>
-            <span class="text-xl">👥</span>
-        </div>
-    </div>
-@endforeach
-
-
+                    <div class="card p-5 bg-white shadow-md rounded-lg flex justify-between items-center">
+                        <div>
+                            <a href="{{ route('teams.show', $team->id) }}"
+                                class="text-xl font-bold text-blue-600 hover:underline">
+                                {{ $team->name }}
+                            </a>
+                            <p class="text-gray-600">{{ $team->description }}</p>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full">
+                            <span class="text-lg font-semibold text-gray-700">{{ $team->users->count() }}</span>
+                            <span class="text-xl">👥</span>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         @else
             <p class="text-gray-600">No tienes equipos creados aún.</p>
@@ -106,7 +104,7 @@
 
 
 
-    <!-- MODAL PARA CREAR EQUIPO -->
+    <!-- Modal para crear equipo -->
     <div id="createTeamModal" class="fixed inset-0 justify-items-center z-50 bg-gray-900 bg-opacity-50"
         style="display:none;">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-20 mt-[140px]">
@@ -137,6 +135,7 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
         <ul class="flex justify-center space-x-4 mt-2">
@@ -147,7 +146,7 @@
     </footer>
 
     <script>
-        // Cerrar modal si clic en el fondo
+        //Cerrar modal si se hace clic fuera
         window.onclick = function (event) {
             if (event.target == document.getElementById('createTeamModal')) {
                 document.getElementById('createTeamModal').style.display = "none";

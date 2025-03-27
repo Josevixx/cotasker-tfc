@@ -62,6 +62,7 @@
 
     </div>
 
+    <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
         <ul class="flex justify-center space-x-4 mt-2">
