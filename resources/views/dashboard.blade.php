@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoTasker - Home Usuario</title>
+    <title>CoTasker</title>
     @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/js/app.js'])
 </head>
 
@@ -139,9 +139,9 @@
     <footer class="footer">
         <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
         <ul class="flex justify-center space-x-4 mt-2">
-            <li><a href="#" class="hover:underline">Términos y Condiciones</a></li>
-            <li><a href="#" class="hover:underline">Política de Privacidad</a></li>
-            <li><a href="#" class="hover:underline">Contacto</a></li>
+            <li><a href="{{route('terms')}}" class="hover:underline">Términos y Condiciones</a></li>
+            <li><a href="{{route('privacy')}}" class="hover:underline">Política de Privacidad</a></li>
+            <li><a href="{{ route('contact')}} " class="hover:underline">Contacto</a></li>
         </ul>
     </footer>
 

@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\TermsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +23,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
     Route::delete('/teams/{team}/kick/{user}', [TeamController::class, 'kick'])->name('teams.kick');
     Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
+
+    //Rutas del footer
+    Route::get('/terms', [TermsController::class, 'terms'])->name('terms');
+    Route::get('/contact', [ContactController::class, 'contact'])->name('contact');
+    Route::get('/privacy', [PrivacyController::class, 'privacy'])->name('privacy');
 
     // Ruta para cerrar sesión
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])

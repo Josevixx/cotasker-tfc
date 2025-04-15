@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'CoTasker') }}</title>
+    <title>CoTasker</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -66,9 +66,9 @@
     <footer class="footer">
         <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
         <ul class="flex justify-center space-x-4 mt-2">
-            <li><a href="#" class="hover:underline">Términos y Condiciones</a></li>
-            <li><a href="#" class="hover:underline">Política de Privacidad</a></li>
-            <li><a href="#" class="hover:underline">Contacto</a></li>
+            <li><a href="{{route('terms')}}" class="hover:underline">Términos y Condiciones</a></li>
+            <li><a href="{{route('privacy')}}" class="hover:underline">Política de Privacidad</a></li>
+            <li><a href="{{route('contact')}}" class="hover:underline">Contacto</a></li>
         </ul>
     </footer>
 </body>
