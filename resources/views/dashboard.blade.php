@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CoTasker</title>
-    @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/dashboard.css', 'resources/js/dashboard.js'])
 </head>
 
 <body class="bg-gray-100">
@@ -102,8 +102,6 @@
 
     </section>
 
-
-
     <!-- Modal para crear equipo -->
     <div id="createTeamModal" class="fixed inset-0 justify-items-center z-50 bg-gray-900 bg-opacity-50"
         style="display:none;">
@@ -114,17 +112,19 @@
                 @csrf
                 <div class="mb-4">
                     <label class="block text-gray-700">Nombre del equipo</label>
-                    <input type="text" name="name" required class="w-full px-4 py-2 border rounded-lg">
+                    <input type="text" name="name" maxlength="25" required class="w-full px-4 py-2 border rounded-lg">
                 </div>
 
                 <div class="mb-4">
                     <label class="block text-gray-700">Descripción (opcional)</label>
-                    <textarea name="description" class="w-full px-4 py-2 border rounded-lg"></textarea>
+                    <textarea name="description" id="description" maxlength="30"
+                        class="w-full px-4 py-2 border rounded-lg" placeholder="Máx. 30 caracteres"></textarea>
+                    <p id="charCount" class="text-sm text-gray-500 mt-1">30 caracteres restantes</p>
                 </div>
 
+
                 <div class="flex justify-end space-x-2">
-                    <button type="button" onclick="document.getElementById('createTeamModal').style.display='none'"
-                        class="bg-gray-500 text-white px-4 py-2 rounded-lg">
+                    <button id="cancelBtn" type="button" class="bg-gray-500 text-white px-4 py-2 rounded-lg">
                         Cancelar
                     </button>
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
@@ -145,14 +145,6 @@
         </ul>
     </footer>
 
-    <script>
-        //Cerrar modal si se hace clic fuera
-        window.onclick = function (event) {
-            if (event.target == document.getElementById('createTeamModal')) {
-                document.getElementById('createTeamModal').style.display = "none";
-            }
-        }
-    </script>
 </body>
 
 </html>

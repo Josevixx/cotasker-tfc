@@ -1,58 +1,33 @@
-<!DOCTYPE html>
-<html lang="es">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoTasker</title>
-    @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/js/app.js'])
-</head>
+@section('content')
+<div class="container mx-auto p-6 max-w-3xl">
+    <div class="bg-white shadow-md rounded-lg p-8">
+        <h1 class="text-3xl font-bold mb-6">Contacto</h1>
 
-<body class="bg-gray-100">
-    <nav class="navbar bg-[#003772] sticky top-0 mx-0 shadow-md">
-        <div class="container mx-auto flex items-center justify-between p-4 text-white">
-            <!-- Logo -->
-            <a class="text-xl font-bold" href="#">CoTasker</a>
+        <p class="mb-4">
+            Si tienes preguntas, sugerencias o necesitas ayuda, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte.
+        </p>
 
-            <!-- Menú principal -->
-            <div class="hidden md:flex space-x-6">
-                <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
-                    href="{{route('dashboard')}}">Inicio</a>
-                <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
-                    href="{{route('dashboard')}}">Mis Equipos</a>
-            </div>
+        <h2 class="text-2xl font-semibold mt-6 mb-2">Correo electrónico</h2>
+        <p class="mb-4">
+            Puedes escribirnos a <a href="mailto:soporte@cotasker.com" class="text-blue-600 hover:underline">soporte@cotasker.com</a>. Respondemos lo antes posible, normalmente en menos de 24 horas.
+        </p>
 
-            <!-- Menú usuario -->
-            <div class="hidden md:flex space-x-6">
-                <a class="relative flex items-center group" href="{{ route('profile.edit') }}">
-                    <span class="mr-2">&#128100;</span>
-                    <span
-                        class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300">Perfil</span>
-                </a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button
-                        class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
-                        type="submit">
-                        Cerrar Sesión
-                    </button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
-    <br>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
-        <ul class="flex justify-center space-x-4 mt-2">
-            <li><a href="{{route('terms')}}" class="hover:underline">Términos y Condiciones</a></li>
-            <li><a href="{{route('privacy')}}" class="hover:underline">Política de Privacidad</a></li>
-            <li><a href="{{ route('contact')}} " class="hover:underline">Contacto</a></li>
+        <h2 class="text-2xl font-semibold mt-6 mb-2">Redes sociales</h2>
+        <p class="mb-4">
+            También puedes seguirnos y enviarnos mensajes a través de nuestras redes sociales:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 mb-6">
+            <li>Twitter: <a href="#" class="text-blue-600 hover:underline">@cotasker</a></li>
+            <li>Facebook: <a href="#" class="text-blue-600 hover:underline">/cotasker</a></li>
+            <li>LinkedIn: <a href="#" class="text-blue-600 hover:underline">/company/cotasker</a></li>
         </ul>
-    </footer>
 
-</body>
-
-</html>
+        <h2 class="text-2xl font-semibold mt-6 mb-2">Soporte técnico</h2>
+        <p>
+            Si experimentas un problema con la plataforma, por favor detalla el error e incluye capturas de pantalla si es posible. Nuestro equipo técnico lo revisará inmediatamente.
+        </p>
+    </div>
+</div>
+@endsection

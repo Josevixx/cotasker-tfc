@@ -17,7 +17,7 @@
 </head>
 
 <body class="antialiased">
-    <div class="bg-gray-100 dark:bg-gray-900">
+    <div class="bg-gray-100 dark:bg-gray-900 flex flex-col min-h-screen">
 
         <nav class="navbar bg-[#003772] sticky top-0 mx-0 shadow-md">
             <div class="container mx-auto flex items-center justify-between p-4 text-white">
@@ -59,18 +59,18 @@
             @endif
 
         </main>
-
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
+            <ul class="flex justify-center space-x-4 mt-2">
+                <li><a href="{{route('terms')}}" class="hover:underline">Términos y Condiciones</a></li>
+                <li><a href="{{route('privacy')}}" class="hover:underline">Política de Privacidad</a></li>
+                <li><a href="{{route('contact')}}" class="hover:underline">Contacto</a></li>
+            </ul>
+        </footer>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
-        <ul class="flex justify-center space-x-4 mt-2">
-            <li><a href="{{route('terms')}}" class="hover:underline">Términos y Condiciones</a></li>
-            <li><a href="{{route('privacy')}}" class="hover:underline">Política de Privacidad</a></li>
-            <li><a href="{{route('contact')}}" class="hover:underline">Contacto</a></li>
-        </ul>
-    </footer>
 </body>
 
 </html>
