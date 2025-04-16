@@ -31,23 +31,20 @@ class TeamController extends Controller
 
     public function join(Request $request)
     {
-        // Validación del código de equipo
         $request->validate([
-            'join_code' => 'required|string|exists:teams,join_code', // Asegurarse de que el código exista en la base de datos
+            'join_code' => 'required|string|exists:teams,join_code',
         ]);
 
-        // Buscar el equipo por su código
         $team = Team::where('join_code', $request->join_code)->first();
 
-        if (!$team) {
-            // Redirigir al dashboard con un mensaje de error si el código no es válido
-            return redirect()->route('dashboard')->with('error', 'Código inválido.');
+        // Ya es miembro
+        if ($team->users->contains(auth()->id())) {
+            return redirect()->route('dashboard')->with('error', 'Ya eres miembro de este equipo.');
         }
 
-        // Agregar al usuario al equipo
+        // Añadir al equipo
         $team->users()->attach(auth()->id());
 
-        // Redirigir al dashboard con un mensaje de éxito
         return redirect()->route('dashboard')->with('success', 'Te has unido al equipo correctamente.');
     }
 
@@ -79,17 +76,29 @@ class TeamController extends Controller
     }
 
     public function destroy($id)
-{
-    $team = Team::findOrFail($id);
+    {
+        $team = Team::findOrFail($id);
 
-    // Verificar que el usuario es el dueño del equipo
-    if (auth()->user()->id === $team->owner_id) {
-        $team->delete();
-        return redirect()->route('dashboard')->with('success', 'Equipo eliminado correctamente.');
+        // Verificar que el usuario es el dueño del equipo
+        if (auth()->user()->id === $team->owner_id) {
+            $team->delete();
+            return redirect()->route('dashboard')->with('success', 'Equipo eliminado correctamente.');
+        }
+
+        return redirect()->route('teams.show', $id)->with('error', 'No tienes permisos para eliminar este equipo.');
     }
 
-    return redirect()->route('teams.show', $id)->with('error', 'No tienes permisos para eliminar este equipo.');
-}
+    public function leave(Team $team)
+    {
+        // Evitar que el dueño se autoexpulse
+        if (auth()->id() === $team->owner_id) {
+            return redirect()->route('dashboard')->with('error', 'El administrador no puede abandonar su propio equipo.');
+        }
+
+        $team->users()->detach(auth()->id());
+
+        return redirect()->route('dashboard')->with('success', 'Has abandonado el equipo.');
+    }
 
     public function index()
     {

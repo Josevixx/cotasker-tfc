@@ -41,20 +41,33 @@ class ProfileController extends Controller
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+{
+    $request->validateWithBag('userDeletion', [
+        'password' => ['required', 'current_password'],
+    ]);
 
-        $user = $request->user();
+    $user = $request->user();
 
-        Auth::logout();
+    // Cerrar sesión antes de eliminar
+    Auth::logout();
 
-        $user->delete();
+    // Eliminar equipos donde el usuario es owner
+    $user->teams()->where('owner_id', $user->id)->each(function ($team) {
+        $team->delete();
+    });
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+    // Eliminar relaciones de equipos en los que está unido
+    $user->joinedTeams()->detach();
 
-        return Redirect::to('/');
-    }
+    // Eliminar el usuario
+    $user->delete();
+
+    // Invalida sesión y regenera el token
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return Redirect::to('/');
+}
+
+
 }

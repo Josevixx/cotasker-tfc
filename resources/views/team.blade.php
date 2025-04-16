@@ -51,27 +51,39 @@
 
             </div>
             <!-- Eleminar Equipo -->
-            @if(auth()->user()->id === $team->owner_id) 
+            @if(auth()->user()->id === $team->owner_id)
                 <div class="mt-6 flex justify-end">
                     <form id="delete-team-form" action="{{ route('teams.destroy', $team->id) }}" method="POST"
                         style="display: none;">
                         @csrf
                         @method('DELETE')
                     </form>
-                    <button onclick="confirmDelete()" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700">
+                    <button onclick="confirmDelete()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
                         Eliminar equipo
                     </button>
                 </div>
             @endif
 
+            @if(auth()->id() !== $team->owner_id)
+                <form action="{{ route('teams.leave', $team->id) }}" method="POST" class="mt-6">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="return confirm('¿Estás seguro de que quieres abandonar este equipo?')"
+                        class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+                        Abandonar equipo
+                    </button>
+                </form>
+            @endif
+
+
             <script>
-            function confirmDelete() {
-                if (confirm('¿Estás seguro de que quieres eliminar este equipo? Esta acción no se puede deshacer.')) {
-                    document.getElementById('delete-team-form').submit();
+                function confirmDelete() {
+                    if (confirm('¿Estás seguro de que quieres eliminar este equipo? Esta acción no se puede deshacer.')) {
+                        document.getElementById('delete-team-form').submit();
+                    }
                 }
-            }
             </script>
-            
+
 
         </div>
     </div>

@@ -45,4 +45,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Equipos creados por el usuario
+    public function teams()
+    {
+        return $this->hasMany(Team::class, 'owner_id');
+    }
+
+    // Equipos a los que pertenece (relación many-to-many)
+    public function joinedTeams()
+    {
+        return $this->belongsToMany(Team::class, 'team_user', 'user_id', 'team_id');
+    }
+
+
 }

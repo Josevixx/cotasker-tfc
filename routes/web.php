@@ -23,7 +23,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
     Route::delete('/teams/{team}/kick/{user}', [TeamController::class, 'kick'])->name('teams.kick');
     Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
-
+    Route::delete('/teams/{team}/leave', [TeamController::class, 'leave'])->name('teams.leave');
+    
     //Rutas del footer
     Route::get('/terms', [TermsController::class, 'terms'])->name('terms');
     Route::get('/contact', [ContactController::class, 'contact'])->name('contact');
