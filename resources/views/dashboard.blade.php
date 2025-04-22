@@ -9,12 +9,12 @@
 </head>
 
 <body class="bg-gray-100">
+    <!-- Nav -->
     <nav class="navbar bg-[#003772] sticky top-0 mx-0 shadow-md">
         <div class="container mx-auto flex items-center justify-between p-4 text-white">
-            <!-- Logo -->
+
             <a class="text-xl font-bold" href="#">CoTasker</a>
 
-            <!-- Menú principal -->
             <div class="hidden md:flex space-x-6">
                 <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
                     href="#">Inicio</a>
@@ -22,7 +22,6 @@
                     href="#">Mis Equipos</a>
             </div>
 
-            <!-- Menú usuario -->
             <div class="hidden md:flex space-x-6">
                 <a class="relative flex items-center group" href="{{ route('profile.edit') }}">
                     <span class="mr-2">&#128100;</span>
@@ -43,9 +42,9 @@
 
     <br>
 
+    <!-- Header -->
     <header class="bg-white py-10 shadow-md rounded-3xl mx-20">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- Sección de bienvenida -->
             <div class="flex-1 text-center">
                 <h1 class="text-3xl font-bold">Bienvenido a CoTasker</h1>
                 <p class="text-gray-600 mt-2">Organiza tus equipos de trabajo y gestiona tus tareas de manera eficiente.
@@ -58,7 +57,7 @@
                 </div>
             </div>
 
-            <!-- Formulario para unirse a un equipo alineado a la derecha, más pequeño -->
+            <!-- Formulario para unirse a un equipo -->
             <div class="w-1/4 bg-white p-6 ml-6 ring-4 rounded-lg">
                 <h2 class="text-xl font-bold mb-4">Unirse a un Equipo</h2>
                 <form action="{{ route('teams.join') }}" method="POST">
@@ -119,7 +118,7 @@
                     <label class="block text-gray-700">Descripción (opcional)</label>
                     <textarea name="description" id="description" maxlength="30"
                         class="w-full px-4 py-2 border rounded-lg" placeholder="Máx. 30 caracteres"></textarea>
-                    <p id="charCount" class="text-sm text-gray-500 mt-1">30 caracteres restantes</p>
+                    <p id="charCount" class="text-sm text-gray-500 mt-1">30 caracteres restantes</p> <!-- Función contador de carácteres -->
                 </div>
 
 
@@ -139,9 +138,9 @@
     <footer class="footer">
         <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
         <ul class="flex justify-center space-x-4 mt-2">
-            <li><a href="{{route('terms')}}" class="hover:underline">Términos y Condiciones</a></li>
-            <li><a href="{{route('privacy')}}" class="hover:underline">Política de Privacidad</a></li>
-            <li><a href="{{ route('contact')}} " class="hover:underline">Contacto</a></li>
+            <li><a href="{{ route('terms') }}" class="hover:underline">Términos y Condiciones</a></li>
+            <li><a href="{{ route('privacy') }}" class="hover:underline">Política de Privacidad</a></li>
+            <li><a href="{{ route('contact') }} " class="hover:underline">Contacto</a></li>
         </ul>
     </footer>
 

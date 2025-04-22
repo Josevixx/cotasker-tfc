@@ -22,11 +22,10 @@ class TeamController extends Controller
             'owner_id' => auth()->id(),
         ]);
 
-        // Agregar al usuario al equipo recién creado
+        // Agregar al usuario
         $team->users()->attach(auth()->id());
 
-        // Redirigir al dashboard
-        return redirect()->route('dashboard')->with('success', 'Equipo creado con éxito.');
+        return redirect()->route('dashboard');
     }
 
     public function join(Request $request)
@@ -39,24 +38,24 @@ class TeamController extends Controller
 
         // Ya es miembro
         if ($team->users->contains(auth()->id())) {
-            return redirect()->route('dashboard')->with('error', 'Ya eres miembro de este equipo.');
+            return redirect()->route('dashboard');
         }
 
         // Añadir al equipo
         $team->users()->attach(auth()->id());
 
-        return redirect()->route('dashboard')->with('success', 'Te has unido al equipo correctamente.');
+        return redirect()->route('dashboard');
     }
 
     public function show(Team $team)
     {
         // Verificar si el usuario pertenece al equipo
         if (!$team->users->contains(auth()->id()) && $team->owner_id !== auth()->id()) {
-            return redirect()->route('dashboard')->with('error', 'No tienes acceso a este equipo.');
+            return redirect()->route('dashboard');
         }
 
-        $owner = $team->owner; // Obtener el dueño del equipo
-        $members = $team->users->where('id', '!=', $team->owner_id); // Filtrar miembros sin incluir al dueño
+        $owner = $team->owner;
+        $members = $team->users->where('id', '!=', $team->owner_id);
 
         return view('team', compact('team', 'owner', 'members'));
     }
@@ -65,14 +64,13 @@ class TeamController extends Controller
     {
         // Verificar si el usuario autenticado es el dueño del equipo
         if ($team->owner_id !== auth()->id()) {
-            return redirect()->route('teams.show', $team->name)->with('error', 'No tienes permiso para expulsar miembros.');
+            return redirect()->route('teams.show', $team->name);
         }
 
         // Eliminar la relación entre el equipo y el usuario
         $team->users()->detach($user->id);
 
-        // Redirigir con un mensaje de éxito
-        return redirect()->route('teams.show', $team->name)->with('success', 'Miembro expulsado correctamente.');
+        return redirect()->route('teams.show', $team->name);
     }
 
     public function destroy($id)
@@ -82,34 +80,33 @@ class TeamController extends Controller
         // Verificar que el usuario es el dueño del equipo
         if (auth()->user()->id === $team->owner_id) {
             $team->delete();
-            return redirect()->route('dashboard')->with('success', 'Equipo eliminado correctamente.');
+            return redirect()->route('dashboard');
         }
 
-        return redirect()->route('teams.show', $id)->with('error', 'No tienes permisos para eliminar este equipo.');
+        return redirect()->route('teams.show', $id);
     }
 
     public function leave(Team $team)
     {
         // Evitar que el dueño se autoexpulse
         if (auth()->id() === $team->owner_id) {
-            return redirect()->route('dashboard')->with('error', 'El administrador no puede abandonar su propio equipo.');
+            return redirect()->route('dashboard');
         }
 
         $team->users()->detach(auth()->id());
 
-        return redirect()->route('dashboard')->with('success', 'Has abandonado el equipo.');
+        return redirect()->route('dashboard');
     }
 
     public function index()
     {
-        // Obtener los equipos del usuario autenticado, tanto los creados como los a los que se ha unido
-        $teams = Team::where('owner_id', auth()->id()) // Equipos creados por el usuario
-            ->orWhereHas('users', function ($query) { // Equipos a los que el usuario está unido
+        // Obtener los equipos 
+        $teams = Team::where('owner_id', auth()->id())
+            ->orWhereHas('users', function ($query) {
                 $query->where('user_id', auth()->id());
             })
             ->get();
 
-        // Pasar los equipos a la vista
         return view('dashboard', compact('teams'));
     }
 

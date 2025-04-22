@@ -11,9 +11,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -21,9 +18,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -34,12 +28,9 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
 {
     $request->validateWithBag('userDeletion', [
@@ -48,7 +39,6 @@ class ProfileController extends Controller
 
     $user = $request->user();
 
-    // Cerrar sesión antes de eliminar
     Auth::logout();
 
     // Eliminar equipos donde el usuario es owner
@@ -59,7 +49,6 @@ class ProfileController extends Controller
     // Eliminar relaciones de equipos en los que está unido
     $user->joinedTeams()->detach();
 
-    // Eliminar el usuario
     $user->delete();
 
     // Invalida sesión y regenera el token

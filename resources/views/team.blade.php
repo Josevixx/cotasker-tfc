@@ -40,7 +40,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs">
+                                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold">
                                         Expulsar
                                     </button>
                                 </form>
@@ -64,6 +64,7 @@
                 </div>
             @endif
 
+            <!-- Confirmación de abandonar -->
             @if(auth()->id() !== $team->owner_id)
                 <form action="{{ route('teams.leave', $team->id) }}" method="POST" class="mt-6">
                     @csrf
@@ -77,6 +78,7 @@
 
 
             <script>
+                //Confirmación de eliminar equipo
                 function confirmDelete() {
                     if (confirm('¿Estás seguro de que quieres eliminar este equipo? Esta acción no se puede deshacer.')) {
                         document.getElementById('delete-team-form').submit();

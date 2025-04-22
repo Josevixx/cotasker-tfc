@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <!-- Nav -->
     <nav class="bg-[#003772] p-4 shadow">
         <div class="container mx-auto flex items-center justify-between">
             <a class="text-white text-xl font-bold ml-4" href="#">CoTasker</a>
