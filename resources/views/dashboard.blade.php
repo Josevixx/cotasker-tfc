@@ -1,47 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoTasker</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/dashboard.css', 'resources/js/dashboard.js'])
-</head>
-
-<body class="bg-gray-100">
-    <!-- Nav -->
-    <nav class="navbar bg-[#003772] sticky top-0 mx-0 shadow-md">
-        <div class="container mx-auto flex items-center justify-between p-4 text-white">
-
-            <a class="text-xl font-bold" href="#">CoTasker</a>
-
-            <div class="hidden md:flex space-x-6">
-                <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
-                    href="#">Inicio</a>
-                <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
-                    href="#">Mis Equipos</a>
-            </div>
-
-            <div class="hidden md:flex space-x-6">
-                <a class="relative flex items-center group" href="{{ route('profile.edit') }}">
-                    <span class="mr-2">&#128100;</span>
-                    <span
-                        class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300">Perfil</span>
-                </a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button
-                        class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
-                        type="submit">
-                        Cerrar Sesión
-                    </button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
+@section('content')
+@vite(['resources/css/dashboard.css', 'resources/js/dashboard.js'])
     <br>
-
     <!-- Header -->
     <header class="bg-white py-10 shadow-md rounded-3xl mx-20">
         <div class="container mx-auto flex justify-between items-center">
@@ -51,7 +12,7 @@
                 </p>
                 <div class="mt-4">
                     <button onclick="document.getElementById('createTeamModal').style.display='block'"
-                        class="btn-primary px-4 py-2 rounded">
+                        class="btn btn-primary">
                         Crear un Equipo
                     </button>
                 </div>
@@ -73,26 +34,28 @@
         </div>
     </header>
 
+
     <!-- Cajas de los equipos -->
     <section class="container mx-auto my-10 mb-20 content">
         <h2 class="text-2xl font-bold mb-4">Tus Equipos</h2>
         @if ($teams->isNotEmpty())
             <div class="grid md:grid-cols-3 gap-6">
                 @foreach($teams as $team)
-                    <div class="card p-5 bg-white shadow-md rounded-lg flex justify-between items-center">
-                        <div>
-                            <a href="{{ route('teams.show', $team->id) }}"
-                                class="text-xl font-bold text-blue-600 hover:underline">
-                                {{ $team->name }}
-                            </a>
-                            <p class="text-gray-600">{{ $team->description }}</p>
+                    <a href="{{ route('teams.board', $team->id) }}" class="block">
+                        <div
+                            class="p-5 bg-white shadow-md rounded-lg flex justify-between items-center hover:shadow-lg hover:scale-[1.01] transition duration-200">
+                            <div>
+                                <h3 class="text-xl font-bold text-blue-600">{{ $team->name }}</h3>
+                                <p class="text-gray-600">{{ $team->description }}</p>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full">
+                                <span class="text-lg font-semibold text-gray-700 select-none">{{ $team->users->count() }}</span>
+                                <span class="text-xl select-none">👥</span>
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full">
-                            <span class="text-lg font-semibold text-gray-700">{{ $team->users->count() }}</span>
-                            <span class="text-xl">👥</span>
-                        </div>
-                    </div>
+                    </a>
                 @endforeach
+
             </div>
         @else
             <p class="text-gray-600">No tienes equipos creados aún.</p>
@@ -116,9 +79,10 @@
 
                 <div class="mb-4">
                     <label class="block text-gray-700">Descripción (opcional)</label>
-                    <textarea name="description" id="description" maxlength="30"
-                        class="w-full px-4 py-2 border rounded-lg" placeholder="Máx. 30 caracteres"></textarea>
-                    <p id="charCount" class="text-sm text-gray-500 mt-1">30 caracteres restantes</p> <!-- Función contador de carácteres -->
+                    <textarea name="description" id="description" maxlength="30" class="w-full px-4 py-2 border rounded-lg"
+                        placeholder="Máx. 30 caracteres"></textarea>
+                    <p id="charCount" class="text-sm text-gray-500 mt-1">30 caracteres restantes</p>
+                    <!-- Función contador de carácteres -->
                 </div>
 
 
@@ -134,16 +98,4 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
-        <ul class="flex justify-center space-x-4 mt-2">
-            <li><a href="{{ route('terms') }}" class="hover:underline">Términos y Condiciones</a></li>
-            <li><a href="{{ route('privacy') }}" class="hover:underline">Política de Privacidad</a></li>
-            <li><a href="{{ route('contact') }} " class="hover:underline">Contacto</a></li>
-        </ul>
-    </footer>
-
-</body>
-
-</html>
+@endsection

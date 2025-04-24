@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TeamBoardController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -25,29 +26,35 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
     Route::delete('/teams/{team}/leave', [TeamController::class, 'leave'])->name('teams.leave');
 
-    // Rutas de tareas de equipos
-    Route::post('/teams/{team}/tasks', [TeamController::class, 'storeTask'])->name('teams.tasks.store');
-    Route::get('/teams/{team}/tasks/{task}', [TeamController::class, 'showTask'])->name('teams.tasks.show');
-    Route::patch('/teams/{team}/tasks/{task}', [TeamController::class, 'updateTask'])->name('teams.tasks.update');
-    Route::delete('/teams/{team}/tasks/{task}', [TeamController::class, 'destroyTask'])->name('teams.tasks.destroy');
+    // Vista principal del tablero de tareas del equipo
+    Route::get('/teams/{team}/board', [TeamBoardController::class, 'index'])->name('teams.board');
 
-    // Rutas de tareas de equipos (acciones)
-    Route::patch('/teams/{team}/tasks/{task}/complete', [TeamController::class, 'completeTask'])->name('teams.tasks.complete');
-    Route::patch('/teams/{team}/tasks/{task}/uncomplete', [TeamController::class, 'uncompleteTask'])->name('teams.tasks.uncomplete');
+    // CRUD de tareas
+    Route::post('/teams/{team}/tasks', [TeamBoardController::class, 'storeTask'])->name('teams.tasks.store');
+    Route::get('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'showTask'])->name('teams.tasks.show');
+    Route::patch('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'updateTask'])->name('teams.tasks.update');
+    Route::delete('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'destroyTask'])->name('teams.tasks.destroy');
 
-    Route::patch('/teams/{team}/tasks/{task}/assign/{user}', [TeamController::class, 'assignTask'])->name('teams.tasks.assign.user');
-    Route::patch('/teams/{team}/tasks/{task}/unassign/{user}', [TeamController::class, 'unassignTask'])->name('teams.tasks.unassign.user');
-    // Asignar y desasignar tareas a los usuarios (sin especificar usuario)
-    Route::patch('/teams/{team}/tasks/{task}/assign', [TeamController::class, 'assignTask'])->name('teams.tasks.assign');
-    Route::patch('/teams/{team}/tasks/{task}/unassign', [TeamController::class, 'unassignTask'])->name('teams.tasks.unassign');
+    // Estado de finalización
+    Route::patch('/teams/{team}/tasks/{task}/complete', [TeamBoardController::class, 'completeTask'])->name('teams.tasks.complete');
+    Route::patch('/teams/{team}/tasks/{task}/uncomplete', [TeamBoardController::class, 'uncompleteTask'])->name('teams.tasks.uncomplete');
 
-    Route::patch('/teams/{team}/tasks/{task}/priority', [TeamController::class, 'setTaskPriority'])->name('teams.tasks.priority');
-    Route::patch('/teams/{team}/tasks/{task}/unpriority', [TeamController::class, 'unsetTaskPriority'])->name('teams.tasks.unpriority');
+    // Asignación de usuario
+    Route::patch('/teams/{team}/tasks/{task}/assign/{user}', [TeamBoardController::class, 'assignTask'])->name('teams.tasks.assign.user');
+    Route::patch('/teams/{team}/tasks/{task}/unassign/{user}', [TeamBoardController::class, 'unassignTask'])->name('teams.tasks.unassign.user');
+    Route::patch('/teams/{team}/tasks/{task}/assign', [TeamBoardController::class, 'assignTask'])->name('teams.tasks.assign');
+    Route::patch('/teams/{team}/tasks/{task}/unassign', [TeamBoardController::class, 'unassignTask'])->name('teams.tasks.unassign');
 
-    Route::patch('/teams/{team}/tasks/{task}/due-date', [TeamController::class, 'setTaskDueDate'])->name('teams.tasks.due-date');
-    Route::patch('/teams/{team}/tasks/{task}/un-due-date', [TeamController::class, 'unsetTaskDueDate'])->name('teams.tasks.un-due-date');
-    
-    Route::patch('/teams/{team}/tasks/{task}/status', [TeamController::class, 'setTaskStatus'])->name('teams.tasks.status');
+    // Prioridad
+    Route::patch('/teams/{team}/tasks/{task}/priority', [TeamBoardController::class, 'setTaskPriority'])->name('teams.tasks.priority');
+    Route::patch('/teams/{team}/tasks/{task}/unpriority', [TeamBoardController::class, 'unsetTaskPriority'])->name('teams.tasks.unpriority');
+
+    // Fechas de vencimiento
+    Route::patch('/teams/{team}/tasks/{task}/due-date', [TeamBoardController::class, 'setTaskDueDate'])->name('teams.tasks.due-date');
+    Route::patch('/teams/{team}/tasks/{task}/un-due-date', [TeamBoardController::class, 'unsetTaskDueDate'])->name('teams.tasks.un-due-date');
+
+    // Cambiar estado
+    Route::patch('/teams/{team}/tasks/{task}/status', [TeamBoardController::class, 'setTaskStatus'])->name('teams.tasks.status');
 
     //Rutas del footer
     Route::get('/terms', [TermsController::class, 'terms'])->name('terms');
@@ -60,9 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Ruta para cerrar sesión
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->middleware('auth')
-        ->name('logout');
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
 require __DIR__ . '/auth.php';

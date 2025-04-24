@@ -1,14 +1,22 @@
-<?php 
-class Task
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Task extends Model
 {
+    use HasFactory;
+
+    protected $fillable = ['title', 'description', 'status', 'task_list_id', 'assigned_to'];
+
     const STATUS_PENDING = 'pending';
     const STATUS_IN_PROGRESS = 'in_progress';
     const STATUS_REVIEW = 'review';
     const STATUS_BLOCKED = 'paused';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CANCELLED = 'cancelled';
-
-    protected $fillable = ['title', 'description', 'status', 'task_list_id', 'assigned_to'];
 
     public static function statuses()
     {
@@ -21,6 +29,14 @@ class Task
             self::STATUS_CANCELLED,
         ];
     }
-}
 
-?>
+    public function taskList()
+    {
+        return $this->belongsTo(TaskList::class);
+    }
+
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
+}

@@ -17,7 +17,7 @@
 </head>
 
 <body class="antialiased">
-    <div class="bg-gray-100 dark:bg-gray-900 flex flex-col min-h-screen">
+    <div class="bg-gray-100 flex flex-col min-h-screen">
 
         <nav class="navbar bg-[#003772] sticky top-0 mx-0 shadow-md">
             <div class="container mx-auto flex items-center justify-between p-4 text-white">
@@ -37,17 +37,21 @@
                     <a class="relative flex items-center group" href="{{ route('profile.edit') }}">
                         <span class="mr-2">&#128100;</span>
                         <span
-                            class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300">Perfil</span>
+                            class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300">
+                            Perfil
+                        </span>
                     </a>
+                
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button
                             class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
                             type="submit">
-                            Cerrar Sesión
+                            <span>Cerrar Sesión</span>
                         </button>
                     </form>
                 </div>
+
             </div>
         </nav>
 
@@ -59,7 +63,7 @@
             @endif
 
         </main>
-        
+
         <!-- Footer -->
         <footer class="footer">
             <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>

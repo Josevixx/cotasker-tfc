@@ -72,7 +72,19 @@ class TeamController extends Controller
 
         return redirect()->route('teams.show', $team->name);
     }
+    
+    public function leave(Team $team)
+    {
+        // Evitar que el dueño se autoexpulse
+        if (auth()->id() === $team->owner_id) {
+            return redirect()->route('dashboard');
+        }
 
+        $team->users()->detach(auth()->id());
+
+        return redirect()->route('dashboard');
+    }
+    
     public function destroy($id)
     {
         $team = Team::findOrFail($id);
@@ -84,18 +96,6 @@ class TeamController extends Controller
         }
 
         return redirect()->route('teams.show', $id);
-    }
-
-    public function leave(Team $team)
-    {
-        // Evitar que el dueño se autoexpulse
-        if (auth()->id() === $team->owner_id) {
-            return redirect()->route('dashboard');
-        }
-
-        $team->users()->detach(auth()->id());
-
-        return redirect()->route('dashboard');
     }
 
     public function index()
