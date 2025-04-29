@@ -3,11 +3,13 @@
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamBoardController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TermsController;
+use App\Http\Controllers\TaskListController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +30,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Vista principal del tablero de tareas del equipo
     Route::get('/teams/{team}/board', [TeamBoardController::class, 'index'])->name('teams.board');
+    Route::post('/tasks/{task}/move', [TaskController::class, 'move']);
+    Route::post('/teams/{team}/task-lists', [TaskListController::class, 'store'])->name('task-lists.store');
 
     // CRUD de tareas
     Route::post('/teams/{team}/tasks', [TeamBoardController::class, 'storeTask'])->name('teams.tasks.store');
