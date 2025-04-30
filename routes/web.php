@@ -30,7 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Vista principal del tablero de tareas del equipo
     Route::get('/teams/{team}/board', [TeamBoardController::class, 'index'])->name('teams.board');
-    Route::post('/tasks/{task}/move', [TaskController::class, 'move']);
+    Route::post('/tasks/{task}/move', [TaskController::class, 'move'])->name('tasks.move');
     Route::post('/teams/{team}/task-lists', [TaskListController::class, 'store'])->name('task-lists.store');
 
     // CRUD de tareas

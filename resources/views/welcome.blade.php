@@ -58,12 +58,12 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-[#003772] text-white text-center py-6 mt-auto">
+    <footer class="footer">
         <p>&copy; 2025 CoTasker. Todos los derechos reservados.</p>
         <ul class="flex justify-center space-x-4 mt-2">
-            <li><a href="#" class="hover:underline">Términos y Condiciones</a></li>
-            <li><a href="#" class="hover:underline">Política de Privacidad</a></li>
-            <li><a href="#" class="hover:underline">Contacto</a></li>
+            <li><a href="{{route('terms')}}" class="hover:underline">Términos y Condiciones</a></li>
+            <li><a href="{{route('privacy')}}" class="hover:underline">Política de Privacidad</a></li>
+            <li><a href="{{route('contact')}}" class="hover:underline">Contacto</a></li>
         </ul>
     </footer>
 </body>
