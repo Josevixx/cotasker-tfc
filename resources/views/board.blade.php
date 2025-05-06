@@ -48,7 +48,7 @@
                     @foreach($taskLists as $taskList)
                             <div class="bg-white rounded-lg shadow p-4 flex flex-col">
                                 <div class="flex justify-between items-center mb-4">
-                                    <h3 class="text-xl font-semibold">{{ $taskList->name }}</h3>
+                                    <h3 class="text-xl font-semibold">{{ $taskList->name }}</h3>  
                                     <button class="text-gray-500 hover:text-red-500" title="Eliminar lista">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m3-3h4a1 1 0 011 1v1H8V5a1 1 0 011-1z" />
