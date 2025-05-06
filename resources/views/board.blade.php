@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @vite(['resources/js/taskboard.js'])
 
     <div class="container mx-auto p-6 space-y-6">
         <!-- Titulo, Descripción y Gestionar -->
@@ -32,7 +33,7 @@
         @else
             <div class="mt-4">
 
-                <div class="flex space-x-2 mb-4">
+                <div class="flex space-x-2 mb-4 items-center">
                     <button onclick="openModal('createListModal')"
                         class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
                         Nueva lista
@@ -42,17 +43,43 @@
                         class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                         Agregar tarea
                     </button>
+
+                    <!-- Filtro por estado -->
+                    <select id="statusFilter" class="ml-4 border-gray-300 rounded-lg p-2 pr-8">
+                        <option value="">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In progress</option>
+                        <option value="review">Review</option>
+                        <option value="paused">Paused</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <!-- Buscador de tareas -->
+                    <input id="taskSearch" type="text" placeholder="Buscar tarea..."
+                        class="ml-4 border-gray-300 rounded-lg p-2 pr-8 w-full sm:w-auto">
                 </div>
+
                 <!-- Listas de tareas -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-start">
+                <div id="board" data-team-id="{{ $team->id }}"
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-start">
                     @foreach($taskLists as $taskList)
-                            <div class="bg-white rounded-lg shadow p-4 flex flex-col">
+                            <div class="bg-white rounded-lg shadow p-4 flex flex-col task-list-wrapper">
                                 <div class="flex justify-between items-center mb-4">
-                                    <h3 class="text-xl font-semibold">{{ $taskList->name }}</h3>  
-                                    <button class="text-gray-500 hover:text-red-500" title="Eliminar lista">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m3-3h4a1 1 0 011 1v1H8V5a1 1 0 011-1z" />
-                                          </svg>                                          
+                                    <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 10h16M4 14h16" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-semibold">{{ $taskList->name }}</h3>
+                                    <button class="text-gray-500 hover:text-red-500 delete-list" data-id="{{ $taskList->id }}"
+                                        title="Eliminar lista">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m3-3h4a1 1 0 011 1v1H8V5a1 1 0 011-1z" />
+                                        </svg>
                                     </button>
                                 </div>
 
@@ -65,12 +92,12 @@
                             'completed' => 'bg-green-100 text-green-800',
                             'cancelled' => 'bg-red-100 text-red-800',
                         ];
-                                                                ?>
+                                                                                                            ?>
 
                                 <div id="task-list-{{ $taskList->id }}" class="task-list space-y-3 min-h-[100px]">
                                     @foreach($taskList->tasks as $task)
                                         <div class="task bg-gray-100 p-3 rounded shadow hover:shadow-md transition-transform transform hover:scale-[1.02] cursor-move relative"
-                                            data-id="{{ $task->id }}">
+                                            data-id="{{ $task->id }}" data-status="{{ $task->status }}">
                                             <div class="flex justify-between items-start">
                                                 <div>
                                                     <p class="text-sm font-medium">{{ $task->title }}</p>
@@ -79,7 +106,8 @@
                                                         {{ ucfirst(str_replace('_', ' ', $task->status)) }}
                                                     </span>
                                                 </div>
-                                                <button class="text-gray-400 hover:text-red-500 ml-2 mt-1" title="Eliminar tarea">
+                                                <button class="text-gray-400 hover:text-red-500 ml-2 mt-1 delete-task"
+                                                    data-id="{{ $task->id }}" title="Eliminar tarea">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
                                                         stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -93,9 +121,9 @@
                             </div>
                     @endforeach
                 </div>
+
             </div>
         @endif
-
     </div>
 
     <!-- Modal para crear lista -->

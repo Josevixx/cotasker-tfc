@@ -26,27 +26,50 @@ class TeamBoardController extends Controller
     }
 
     public function storeTask(Request $request, Team $team)
-{
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string|max:1000',
-        'status' => 'required|in:' . implode(',', Task::statuses()),
-        'task_list_id' => 'required|exists:task_lists,id',
-    ]);
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'status' => 'required|in:' . implode(',', Task::statuses()),
+            'task_list_id' => 'required|exists:task_lists,id',
+        ]);
 
-    // Verifica que la lista pertenece al equipo
-    $taskList = TaskList::where('id', $request->task_list_id)
-                        ->where('team_id', $team->id)
-                        ->firstOrFail();
+        // Verifica que la lista pertenece al equipo
+        $taskList = TaskList::where('id', $request->task_list_id)
+            ->where('team_id', $team->id)
+            ->firstOrFail();
 
-    $taskList->tasks()->create([
-        'title' => $request->title,
-        'description' => $request->description,
-        'status' => $request->status,
-    ]);
+        $taskList->tasks()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status,
+        ]);
 
-    return redirect()->back()->with('success', 'Tarea creada correctamente.');
-}
+        return redirect()->back()->with('success', 'Tarea creada correctamente.');
+    }
+
+    public function destroyTaskList($teamId, $taskListId)
+    {
+        $taskList = TaskList::where('id', $taskListId)
+            ->where('team_id', $teamId)
+            ->firstOrFail();
+
+        $taskList->delete();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function destroyTask($teamId, $taskId)
+    {
+        $task = Task::where('id', $taskId)
+            ->whereHas('taskList', function ($query) use ($teamId) {
+                $query->where('team_id', $teamId);
+            })->firstOrFail();
+
+        $task->delete();
+
+        return response()->json(['success' => true]);
+    }
 
 
 }

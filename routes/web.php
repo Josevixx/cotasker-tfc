@@ -38,27 +38,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'showTask'])->name('teams.tasks.show');
     Route::patch('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'updateTask'])->name('teams.tasks.update');
     Route::delete('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'destroyTask'])->name('teams.tasks.destroy');
+    Route::delete('/teams/{team}/task-lists/{taskList}', [TeamBoardController::class, 'destroyTaskList'])->name('teams.task-lists.destroy');
 
-    // Estado de finalización
-    Route::patch('/teams/{team}/tasks/{task}/complete', [TeamBoardController::class, 'completeTask'])->name('teams.tasks.complete');
-    Route::patch('/teams/{team}/tasks/{task}/uncomplete', [TeamBoardController::class, 'uncompleteTask'])->name('teams.tasks.uncomplete');
-
-    // Asignación de usuario
-    Route::patch('/teams/{team}/tasks/{task}/assign/{user}', [TeamBoardController::class, 'assignTask'])->name('teams.tasks.assign.user');
-    Route::patch('/teams/{team}/tasks/{task}/unassign/{user}', [TeamBoardController::class, 'unassignTask'])->name('teams.tasks.unassign.user');
-    Route::patch('/teams/{team}/tasks/{task}/assign', [TeamBoardController::class, 'assignTask'])->name('teams.tasks.assign');
-    Route::patch('/teams/{team}/tasks/{task}/unassign', [TeamBoardController::class, 'unassignTask'])->name('teams.tasks.unassign');
-
-    // Prioridad
-    Route::patch('/teams/{team}/tasks/{task}/priority', [TeamBoardController::class, 'setTaskPriority'])->name('teams.tasks.priority');
-    Route::patch('/teams/{team}/tasks/{task}/unpriority', [TeamBoardController::class, 'unsetTaskPriority'])->name('teams.tasks.unpriority');
-
-    // Fechas de vencimiento
-    Route::patch('/teams/{team}/tasks/{task}/due-date', [TeamBoardController::class, 'setTaskDueDate'])->name('teams.tasks.due-date');
-    Route::patch('/teams/{team}/tasks/{task}/un-due-date', [TeamBoardController::class, 'unsetTaskDueDate'])->name('teams.tasks.un-due-date');
-
-    // Cambiar estado
-    Route::patch('/teams/{team}/tasks/{task}/status', [TeamBoardController::class, 'setTaskStatus'])->name('teams.tasks.status');
 
     //Rutas del footer
     Route::get('/terms', [TermsController::class, 'terms'])->name('terms');
