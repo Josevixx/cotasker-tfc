@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto p-6 max-w-3xl">
     <div class="bg-white shadow-md rounded-lg p-8">
-        <h1 class="text-3xl font-bold mb-6">Contacto</h1>
+        <h1 class="text-3xl underline font-bold mb-6">Contacto</h1>
 
         <p class="mb-4">
             Si tienes preguntas, sugerencias o necesitas ayuda, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte.

@@ -62,15 +62,10 @@ class TeamController extends Controller
 
     public function kick(Team $team, User $user)
     {
-        // Verificar si el usuario autenticado es el dueño del equipo
-        if ($team->owner_id !== auth()->id()) {
-            return redirect()->route('teams.show', $team->name);
-        }
-
         // Eliminar la relación entre el equipo y el usuario
         $team->users()->detach($user->id);
 
-        return redirect()->route('teams.show', $team->name);
+        return redirect()->route('teams.show', $team->id);
     }
     
     public function leave(Team $team)
@@ -89,7 +84,7 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
 
-        // Verificar que el usuario es el dueño del equipo
+        // Solo el dueño puede eliminar el equipo
         if (auth()->user()->id === $team->owner_id) {
             $team->delete();
             return redirect()->route('dashboard');
@@ -100,7 +95,7 @@ class TeamController extends Controller
 
     public function index()
     {
-        // Obtener los equipos 
+        // Mostrar los equipos 
         $teams = Team::where('owner_id', auth()->id())
             ->orWhereHas('users', function ($query) {
                 $query->where('user_id', auth()->id());

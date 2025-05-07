@@ -25,16 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Habilitar Sortable en las listas de tareas
-const board = document.getElementById('board');
-
-if (board) {
-    Sortable.create(board, {
-        animation: 200,
-        ghostClass: 'bg-gray-200',
-        handle: '.drag-handle',
-    });
-}
 
 //Filtro de tareas
 document.addEventListener('DOMContentLoaded', () => {
@@ -54,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.task-list-wrapper').forEach(list => {
             const visibleTasks = list.querySelectorAll('.task:not(.hidden)');
             if (!selectedStatus) {
-                list.classList.remove('hidden'); // Mostrar todas si se selecciona "All"
+                list.classList.remove('hidden');
             } else {
                 list.classList.toggle('hidden', visibleTasks.length === 0);
             }
@@ -89,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.task-list-wrapper').forEach(list => {
             const visibleTasks = list.querySelectorAll('.task:not(.hidden)');
             if (!selectedStatus && !searchQuery) {
-                list.classList.remove('hidden'); // Mostrar todas si se selecciona "All" o no hay búsqueda
+                list.classList.remove('hidden');
             } else {
                 list.classList.toggle('hidden', visibleTasks.length === 0);
             }
@@ -102,3 +92,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // Escuchar cambios en el campo de búsqueda
     searchInput.addEventListener('input', filterTasks);
 });
+
+
+// Habilitar Sortable en las listas de tareas
+document.addEventListener('DOMContentLoaded', () => {
+    const lists = document.querySelectorAll('.task-list');
+
+    lists.forEach((list) => {
+        new Sortable(list, {
+            group: 'shared-tasks',
+            animation: 150,
+            ghostClass: 'bg-blue-100',
+            onEnd: function (evt) {
+                const taskId = evt.item.dataset.id;
+                const newListId = evt.to.id.replace('task-list-', '');
+
+                fetch(`/tasks/${taskId}/move`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        task_list_id: newListId,
+                        new_index: evt.newIndex
+                    })
+                });
+            }
+        });
+    });
+});
+
+const board = document.getElementById('board');
+
+if (board) {
+    Sortable.create(board, {
+        animation: 200,
+        ghostClass: 'bg-gray-200',
+        handle: '.drag-handle',
+    });
+}

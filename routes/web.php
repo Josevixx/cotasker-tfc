@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuscriptionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamBoardController;
 use App\Http\Controllers\TeamController;
@@ -19,6 +20,9 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     // Ruta para el dashboard
     Route::get('/dashboard', [TeamController::class, 'index'])->name('dashboard');
+
+    // Ruta de planes de suscripción
+    Route::get('/suscription', [SuscriptionController::class, 'suscription'])->name('suscription');
 
     // Rutas de equipos
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
@@ -39,7 +43,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'updateTask'])->name('teams.tasks.update');
     Route::delete('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'destroyTask'])->name('teams.tasks.destroy');
     Route::delete('/teams/{team}/task-lists/{taskList}', [TeamBoardController::class, 'destroyTaskList'])->name('teams.task-lists.destroy');
-
 
     //Rutas del footer
     Route::get('/terms', [TermsController::class, 'terms'])->name('terms');

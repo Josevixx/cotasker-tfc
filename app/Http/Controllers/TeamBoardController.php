@@ -19,10 +19,10 @@ class TeamBoardController extends Controller
         }
 
         // Obtener las listas de tareas para el equipo
-        $taskLists = $team->taskLists()->with('tasks')->get();  // Trae las listas de tareas con sus tareas asociadas
+        $taskLists = $team->taskLists()->with('tasks')->get();
         $members = $team->users;
 
-        return view('board', compact('team', 'taskLists', 'members'));
+        return view('taskboard', compact('team', 'taskLists', 'members'));
     }
 
     public function storeTask(Request $request, Team $team)
@@ -50,6 +50,7 @@ class TeamBoardController extends Controller
 
     public function destroyTaskList($teamId, $taskListId)
     {
+        // Eliminar la lista de tareas
         $taskList = TaskList::where('id', $taskListId)
             ->where('team_id', $teamId)
             ->firstOrFail();
@@ -61,6 +62,7 @@ class TeamBoardController extends Controller
 
     public function destroyTask($teamId, $taskId)
     {
+        // Eliminar tarea
         $task = Task::where('id', $taskId)
             ->whereHas('taskList', function ($query) use ($teamId) {
                 $query->where('team_id', $teamId);

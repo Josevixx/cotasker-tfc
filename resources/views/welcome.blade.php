@@ -17,9 +17,13 @@
             @if (Route::has('login'))
                 <div>
                     @auth
-                        <a href="{{ route('dashboard') }}" class="text-white mr-4 hover:text-gray-300">Ir al Dashboard</a>
+                        <a href="{{ route('dashboard') }}" class="text-white relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
+                            Ir al Dashboard
+                        </a>
                     @else
-                        <a href="{{ route('login') }}" class="text-white mr-4 hover:text-gray-300">Iniciar Sesión</a>
+                        <a href="{{ route('login') }}" class="text-white relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
+                            Iniciar Sesión
+                        </a>
                     @endauth
                 </div>
             @endif
@@ -28,10 +32,10 @@
 
     <!-- Header -->
     <header class="hero">
-        <h1 class="text-3xl font-bold">Organiza tu trabajo en equipo de manera eficiente</h1>
-        <p class="text-lg mt-4">Gestiona tareas, colabora con tu equipo y alcanza tus objetivos.</p>
+        <h1 class="text-3xl text-gray-800 font-bold">Organiza tu trabajo en equipo de manera eficiente</h1>
+        <p class="text-lg text-gray-800 mt-4">Gestiona tareas, colabora con tu equipo y alcanza tus objetivos.</p>
         <a href="{{ route('register') }}"
-            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded text-lg mt-6 inline-block">Empieza
+            class="bg-green-600 hover:bg-green-700 transtion duration-300 text-white px-6 py-3 rounded text-lg mt-6 inline-block">Empieza
             Gratis</a>
     </header>
 

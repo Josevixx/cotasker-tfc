@@ -33,13 +33,17 @@
                     @foreach($members as $member)
                         <li class="flex justify-between items-center py-3 text-gray-800 font-medium ">
                             {{ $member->name }} ({{ $member->email }})
+                            
+                            <!-- Línea entre el nombre y gmail y el boton -->
+                            <div class="flex-grow border-t border-gray-300 mx-4"></div>
+
                             <!-- Botón de Expulsar -->
                             @if($owner->id === auth()->id())
                                 <form method="POST" action="{{ route('teams.kick', ['team' => $team->id, 'user' => $member->id]) }}"
                                     class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit"
+                                    <button onclick="return confirm('¿Estás seguro de que quieres expulsar a este usuario?')" type="submit"
                                         class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold">
                                         Expulsar
                                     </button>
@@ -58,7 +62,7 @@
                         @csrf
                         @method('DELETE')
                     </form>
-                    <button onclick="confirmDelete()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+                    <button onclick="confirmDeleteTeam()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
                         Eliminar equipo
                     </button>
                 </div>
@@ -79,7 +83,7 @@
 
             <script>
                 //Confirmación de eliminar equipo
-                function confirmDelete() {
+                function confirmDeleteTeam() {
                     if (confirm('¿Estás seguro de que quieres eliminar este equipo? Esta acción no se puede deshacer.')) {
                         document.getElementById('delete-team-form').submit();
                     }

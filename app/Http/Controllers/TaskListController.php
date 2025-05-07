@@ -8,6 +8,7 @@ class TaskListController extends Controller
 {
     public function store(Request $request, Team $team)
 {
+    // Guardar una nueva lista de tareas
     $request->validate([
         'name' => 'required|string|max:255',
     ]);

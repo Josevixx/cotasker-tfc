@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto p-6 max-w-4xl">
     <div class="bg-white shadow-md rounded-lg p-8">
-        <h1 class="text-3xl font-bold mb-6">Política de Privacidad</h1>
+        <h1 class="text-3xl underline font-bold mb-6">Política de Privacidad</h1>
 
         <p class="mb-4">
             En CoTasker, valoramos tu privacidad y nos comprometemos a proteger tus datos personales. Esta política describe cómo recopilamos, usamos y protegemos tu información.

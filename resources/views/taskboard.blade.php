@@ -11,7 +11,7 @@
                     <h1 class="text-3xl font-bold">{{ $team->name }}</h1>
                     <p class="text-gray-600">{{ $team->description }}</p>
                 </div>
-                <!-- Ruta para gestionar el equipo -->
+                <!-- Gestionar el equipo -->
                 <a href="{{ route('teams.show', $team) }}"
                     class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition mr-4">
                     Gestionar equipo
@@ -32,6 +32,21 @@
             </div>
         @else
             <div class="mt-4">
+
+
+                <!-- TODO:
+
+                    - Vista de planes premium y pagos
+                    - Modal de Ver Y Modificar tareas
+                    - Calendario
+
+                    ¡SOLO PUEDEN CREAR 1 EQUIPO SI NO HA PAGADO!
+                    Se pueden unir a equipos, limitado a 3 equipos
+                    Plan Premium 3.99€, Creación y unión a equipos ilimitada
+
+                -->
+
+
 
                 <div class="flex space-x-2 mb-4 items-center">
                     <button onclick="openModal('createListModal')"
@@ -92,7 +107,7 @@
                             'completed' => 'bg-green-100 text-green-800',
                             'cancelled' => 'bg-red-100 text-red-800',
                         ];
-                                                                                                            ?>
+                                                                                ?>
 
                                 <div id="task-list-{{ $taskList->id }}" class="task-list space-y-3 min-h-[100px]">
                                     @foreach($taskList->tasks as $task)
@@ -191,6 +206,7 @@
     </div>
 
     <script>
+        // Funciones para abrir y cerrar modales
         function openModal(id) {
             document.getElementById(id).classList.remove('hidden');
             document.getElementById(id).classList.add('flex');
@@ -200,34 +216,6 @@
             document.getElementById(id).classList.add('hidden');
             document.getElementById(id).classList.remove('flex');
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const lists = document.querySelectorAll('.task-list');
-
-            lists.forEach((list) => {
-                new Sortable(list, {
-                    group: 'shared-tasks',
-                    animation: 150,
-                    ghostClass: 'bg-blue-100',
-                    onEnd: function (evt) {
-                        const taskId = evt.item.dataset.id;
-                        const newListId = evt.to.id.replace('task-list-', '');
-
-                        fetch(`/tasks/${taskId}/move`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                            body: JSON.stringify({
-                                task_list_id: newListId,
-                                new_index: evt.newIndex
-                            })
-                        });
-                    }
-                });
-            });
-        });
     </script>
 
 @endsection
