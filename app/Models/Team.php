@@ -37,4 +37,17 @@ class Team extends Model
     {
         return $this->hasMany(TaskList::class);
     }
+
+    // Relación a través de taskLists para obtener todas las tareas del equipo
+    public function tasks()
+    {
+        return $this->hasManyThrough(
+            \App\Models\Task::class,
+            \App\Models\TaskList::class,
+            'team_id',
+            'task_list_id',
+            'id',
+            'id'
+        );
+    }
 }

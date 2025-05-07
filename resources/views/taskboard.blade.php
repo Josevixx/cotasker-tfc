@@ -11,11 +11,18 @@
                     <h1 class="text-3xl font-bold">{{ $team->name }}</h1>
                     <p class="text-gray-600">{{ $team->description }}</p>
                 </div>
-                <!-- Gestionar el equipo -->
-                <a href="{{ route('teams.show', $team) }}"
-                    class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition mr-4">
-                    Gestionar equipo
-                </a>
+                <div class="flex items-center space-x-4"> 
+                    <!-- Botón para ir al Calendario -->
+                    <a href="{{ route('calendar.index', $team) }}"
+                        class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition">
+                        Calendario
+                    </a>
+                    <!-- Gestionar el equipo -->
+                    <a href="{{ route('teams.show', $team) }}"
+                        class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition mr-4">
+                        Gestionar equipo
+                    </a>
+                </div>
             </div>
         </div>
 

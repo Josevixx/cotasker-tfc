@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\TaskListController;
+use App\Http\Controllers\CalendarController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,6 +44,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'updateTask'])->name('teams.tasks.update');
     Route::delete('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'destroyTask'])->name('teams.tasks.destroy');
     Route::delete('/teams/{team}/task-lists/{taskList}', [TeamBoardController::class, 'destroyTaskList'])->name('teams.task-lists.destroy');
+
+    // Rutas del calendario
+    Route::get('/teams/{team}/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
     //Rutas del footer
     Route::get('/terms', [TermsController::class, 'terms'])->name('terms');
