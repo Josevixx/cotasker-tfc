@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Rutas de equipos
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
     Route::post('/teams/join', [TeamController::class, 'join'])->name('teams.join');
+
     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
     Route::delete('/teams/{team}/kick/{user}', [TeamController::class, 'kick'])->name('teams.kick');
     Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');

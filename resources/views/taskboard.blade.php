@@ -40,21 +40,6 @@
         @else
             <div class="mt-4">
 
-
-                <!-- TODO:
-
-                    - Vista de planes premium y pagos
-                    - Modal de Ver Y Modificar tareas
-                    - Calendario
-
-                    ¡SOLO PUEDEN CREAR 1 EQUIPO SI NO HA PAGADO!
-                    Se pueden unir a equipos, limitado a 3 equipos
-                    Plan Premium 3.99€, Creación y unión a equipos ilimitada
-
-                -->
-
-
-
                 <div class="flex space-x-2 mb-4 items-center">
                     <button onclick="openModal('createListModal')"
                         class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
