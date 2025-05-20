@@ -44,15 +44,4 @@ class TaskController extends Controller
         return response()->json(['message' => 'Tarea actualizada correctamente']);
     }
 
-    public function myTasks()
-    {
-        $tasks = Task::where('assigned_to', Auth::id())
-            ->with(['taskList'])
-            ->latest()
-            ->get();
-
-        return view('tasks.mine', compact('tasks'));
-    }
-
-
 }

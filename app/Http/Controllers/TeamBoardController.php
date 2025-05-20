@@ -22,7 +22,24 @@ class TeamBoardController extends Controller
         $taskLists = $team->taskLists()->with('tasks')->get();
         $members = $team->users;
 
-        return view('taskboard', compact('team', 'taskLists', 'members'));
+        $statusColors = [
+            'pending' => 'bg-yellow-100 text-yellow-800',
+            'in_progress' => 'bg-blue-100 text-blue-800',
+            'review' => 'bg-purple-100 text-purple-800',
+            'paused' => 'bg-gray-200 text-gray-700',
+            'completed' => 'bg-green-100 text-green-800',
+            'cancelled' => 'bg-red-100 text-red-800',
+        ];
+        $statusTexts = [
+            'pending' => 'Pendiente',
+            'in_progress' => 'En progreso',
+            'review' => 'Revisión',
+            'paused' => 'Pausado',
+            'completed' => 'Completado',
+            'cancelled' => 'Cancelado',
+        ];
+
+        return view('taskboard', compact('team', 'taskLists', 'members', 'statusColors', 'statusTexts'));
     }
 
     public function storeTask(Request $request, Team $team)

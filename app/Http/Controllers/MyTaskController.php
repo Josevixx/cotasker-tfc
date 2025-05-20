@@ -8,10 +8,10 @@ class MyTaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::where('assigned_to', Auth::id())
-            ->with('taskList.team')
-            ->latest()
+        $tasks = Task::with(['assignedUser', 'taskList.team'])
+            ->where('assigned_to', auth()->id())
             ->get();
+
 
         $statusTexts = [
             'pending' => 'Pendiente',

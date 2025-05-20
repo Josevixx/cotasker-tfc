@@ -70,62 +70,61 @@
                 <div id="board" data-team-id="{{ $team->id }}"
                     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-start">
                     @foreach($taskLists as $taskList)
-                            <div class="bg-white rounded-lg shadow p-4 flex flex-col task-list-wrapper">
-                                <div class="flex justify-between items-center mb-4">
-                                    <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                                            stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4 10h16M4 14h16" />
-                                        </svg>
-                                    </div>
-                                    <h3 class="text-xl font-semibold">{{ $taskList->name }}</h3>
-                                    <button class="text-gray-500 hover:text-red-500 delete-list" data-id="{{ $taskList->id }}"
-                                        title="Eliminar lista">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                                            stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m3-3h4a1 1 0 011 1v1H8V5a1 1 0 011-1z" />
-                                        </svg>
-                                    </button>
+                        <div class="bg-white rounded-lg shadow p-4 flex flex-col task-list-wrapper">
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 10h16M4 14h16" />
+                                    </svg>
                                 </div>
+                                <h3 class="text-xl font-semibold">{{ $taskList->name }}</h3>
+                                <button class="text-gray-500 hover:text-red-500 delete-list" data-id="{{ $taskList->id }}"
+                                    title="Eliminar lista">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m3-3h4a1 1 0 011 1v1H8V5a1 1 0 011-1z" />
+                                    </svg>
+                                </button>
+                            </div>
 
-                                <?php
-                        $statusColors = [
-                            'pending' => 'bg-yellow-100 text-yellow-800',
-                            'in_progress' => 'bg-blue-100 text-blue-800',
-                            'review' => 'bg-purple-100 text-purple-800',
-                            'paused' => 'bg-gray-200 text-gray-700',
-                            'completed' => 'bg-green-100 text-green-800',
-                            'cancelled' => 'bg-red-100 text-red-800',
-                        ];
-                                                                                                ?>
-
-                                <div id="task-list-{{ $taskList->id }}" class="task-list space-y-3 min-h-[100px]">
-                                    @foreach($taskList->tasks as $task)
-                                        <div class="task bg-gray-100 p-3 rounded shadow hover:shadow-md transition-transform transform hover:scale-[1.02] cursor-move relative"
-                                            data-id="{{ $task->id }}" data-status="{{ $task->status }}">
-                                            <div class="flex justify-between items-start">
-                                                <div>
-                                                    <p class="text-sm font-medium">{{ $task->title }}</p>
-                                                    <span
-                                                        class="inline-block text-xs px-2 py-1 rounded {{ $statusColors[$task->status] ?? 'bg-gray-100 text-gray-600' }}">
-                                                        {{ ucfirst(str_replace('_', ' ', $task->status)) }}
-                                                    </span>
-                                                </div>
+                            <!-- Tareas -->
+                            <div id="task-list-{{ $taskList->id }}" class="task-list space-y-3 min-h-[100px]">
+                                @foreach($taskList->tasks as $task)
+                                    <div class="task bg-gray-100 p-3 rounded shadow hover:shadow-md transition-transform transform hover:scale-[1.02] cursor-move relative"
+                                        data-id="{{ $task->id }}" data-status="{{ $task->status }}">
+                                        <div class="flex justify-between items-start">
+                                            <div class="flex flex-col space-y-1">
+                                                <p class="text-sm font-medium">{{ $task->title }}</p>
+                                                <span
+                                                    class="inline-block text-xs px-2 py-1 rounded {{ $statusColors[$task->status] ?? 'bg-gray-100 text-gray-600' }}">
+                                                    {{ ucfirst(str_replace('_', ' ', $task->status)) }}
+                                                </span>
+                                            </div>
+                                            <div class="flex flex-col items-end">
                                                 <button class="text-gray-400 hover:text-red-500 ml-2 mt-1 delete-task"
                                                     data-id="{{ $task->id }}" title="Eliminar tarea">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                                                        stroke="currentColor">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m3-3h4a1 1 0 011 1v1H8V5a1 1 0 011-1z" />
                                                     </svg>
                                                 </button>
+                                                <p class="text-xs text-gray-500 mt-1">
+                                                    @if ($task->assignedUser)
+                                                        <p class="text-sm text-gray-500 mt-1">{{ $task->assignedUser->name }}</p>
+                                                    @else
+                                                    <p class="text-sm text-gray-400 mt-1">Sin Asignar</p>
+                                                @endif
+                                                </p>
                                             </div>
                                         </div>
-                                    @endforeach
-                                </div>
+                                    </div>
+                                @endforeach
                             </div>
+                        </div>
                     @endforeach
                 </div>
 
@@ -172,12 +171,12 @@
                 <div class="mb-4">
                     <label for="taskStatus" class="block text-gray-700">Estado</label>
                     <select id="taskStatus" name="status" class="w-full px-4 py-2 border rounded-lg" required>
-                        <option value="pending">Pending</option>
-                        <option value="in_progress">In Progress</option>
-                        <option value="review">Review</option>
-                        <option value="paused">Paused</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
+                        <option class="{{ $statusColors['pending'] }}" value="pending">Pending</option>
+                        <option class="{{ $statusColors['in_progress'] }}" value="in_progress">In Progress</option>
+                        <option class="{{ $statusColors['review'] }}" value="review">Review</option>
+                        <option class="{{ $statusColors['paused'] }}" value="paused">Paused</option>
+                        <option class="{{ $statusColors['completed'] }}" value="completed">Completed</option>
+                        <option class="{{ $statusColors['cancelled'] }}" value="cancelled">Cancelled</option>
                     </select>
                 </div>
                 <div class="mb-4">
@@ -236,7 +235,6 @@
                 <div class="mb-4">
                     <label for="editAssignedTo" class="block text-gray-700">Asignado a</label>
                     <select name="assigned_to" id="editAssignedTo" class="w-full px-4 py-2 border rounded-lg">
-                        <!-- Se llenará dinámicamente -->
                     </select>
                 </div>
 
