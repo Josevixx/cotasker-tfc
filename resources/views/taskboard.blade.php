@@ -11,7 +11,7 @@
                     <h1 class="text-3xl font-bold">{{ $team->name }}</h1>
                     <p class="text-gray-600">{{ $team->description }}</p>
                 </div>
-                <div class="flex items-center space-x-4"> 
+                <div class="flex items-center space-x-4">
                     <!-- Botón para ir al Calendario -->
                     <a href="{{ route('calendar.index', $team) }}"
                         class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition">
@@ -53,13 +53,13 @@
 
                     <!-- Filtro por estado -->
                     <select id="statusFilter" class="ml-4 border-gray-300 rounded-lg p-2 pr-8">
-                        <option value="">Todos</option>
-                        <option value="pending">Pendiente</option>
-                        <option value="in_progress">En progreso</option>
-                        <option value="review">Revisión</option>
-                        <option value="paused">Pausado</option>
-                        <option value="completed">Completado</option>
-                        <option value="cancelled">Cancelado</option>
+                        <option value="">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="review">Review</option>
+                        <option value="paused">Paused</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
                     </select>
                     <!-- Buscador de tareas -->
                     <input id="taskSearch" type="text" placeholder="Buscar tarea..."
@@ -99,7 +99,7 @@
                             'completed' => 'bg-green-100 text-green-800',
                             'cancelled' => 'bg-red-100 text-red-800',
                         ];
-                                                                                ?>
+                                                                                                ?>
 
                                 <div id="task-list-{{ $taskList->id }}" class="task-list space-y-3 min-h-[100px]">
                                     @foreach($taskList->tasks as $task)
@@ -172,12 +172,12 @@
                 <div class="mb-4">
                     <label for="taskStatus" class="block text-gray-700">Estado</label>
                     <select id="taskStatus" name="status" class="w-full px-4 py-2 border rounded-lg" required>
-                        <option value="pending">Pendiente</option>
-                        <option value="in_progress">En progreso</option>
-                        <option value="review">Revisión</option>
-                        <option value="paused">Pausado</option>
-                        <option value="completed">Completado</option>
-                        <option value="cancelled">Cancelado</option>
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="review">Review</option>
+                        <option value="paused">Paused</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
                     </select>
                 </div>
                 <div class="mb-4">
@@ -197,6 +197,60 @@
         </div>
     </div>
 
+    <!-- Modal para editar tarea -->
+    <div id="editTaskModal" class="fixed inset-0 z-50 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-auto">
+            <h2 class="text-2xl font-semibold mb-4">Editar tarea</h2>
+            <form id="editTaskForm">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="task_id" id="editTaskId">
+
+                <div class="mb-4">
+                    <label for="editTitle" class="block text-gray-700">Título</label>
+                    <input type="text" name="title" id="editTitle" class="w-full px-4 py-2 border rounded-lg" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="editDescription" class="block text-gray-700">Descripción</label>
+                    <textarea name="description" id="editDescription" class="w-full px-4 py-2 border rounded-lg"></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="editStatus" class="block text-gray-700">Estado</label>
+                    <select name="status" id="editStatus" class="w-full px-4 py-2 border rounded-lg" required>
+                        <option class="{{ $statusColors['pending'] }}" value="pending">Pending</option>
+                        <option class="{{ $statusColors['in_progress'] }}" value="in_progress">In Progress</option>
+                        <option class="{{ $statusColors['review'] }}" value="review">Review</option>
+                        <option class="{{ $statusColors['paused'] }}" value="paused">Paused</option>
+                        <option class="{{ $statusColors['completed'] }}" value="completed">Completed</option>
+                        <option class="{{ $statusColors['cancelled'] }}" value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="editDueDate" class="block text-gray-700">Fecha límite</label>
+                    <input type="date" name="due_date" id="editDueDate" class="w-full px-4 py-2 border rounded-lg">
+                </div>
+
+                <div class="mb-4">
+                    <label for="editAssignedTo" class="block text-gray-700">Asignado a</label>
+                    <select name="assigned_to" id="editAssignedTo" class="w-full px-4 py-2 border rounded-lg">
+                        <!-- Se llenará dinámicamente -->
+                    </select>
+                </div>
+
+                <div class="flex justify-end space-x-2">
+                    <button type="button" onclick="closeModal('editTaskModal')"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancelar</button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <script>
         // Funciones para abrir y cerrar modales
         function openModal(id) {
@@ -209,5 +263,6 @@
             document.getElementById(id).classList.remove('flex');
         }
     </script>
+
 
 @endsection

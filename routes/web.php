@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\TaskListController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\MyTaskController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +25,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Ruta de planes de suscripción
     Route::get('/suscription', [SuscriptionController::class, 'suscription'])->name('suscription');
+
+    // Ruta para ver mis tareas
+    Route::get('/mytasks', [MyTaskController::class, 'index'])->name('mytasks');
 
     // Rutas de equipos
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
@@ -42,9 +46,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // CRUD de tareas
     Route::post('/teams/{team}/tasks', [TeamBoardController::class, 'storeTask'])->name('teams.tasks.store');
     Route::get('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'showTask'])->name('teams.tasks.show');
-    Route::patch('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'updateTask'])->name('teams.tasks.update');
     Route::delete('/teams/{team}/tasks/{task}', [TeamBoardController::class, 'destroyTask'])->name('teams.tasks.destroy');
     Route::delete('/teams/{team}/task-lists/{taskList}', [TeamBoardController::class, 'destroyTaskList'])->name('teams.task-lists.destroy');
+    Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+    Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
 
     // Rutas del calendario
     Route::get('/teams/{team}/calendar', [CalendarController::class, 'index'])->name('calendar.index');

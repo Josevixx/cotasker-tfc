@@ -133,3 +133,61 @@ if (board) {
         handle: '.drag-handle',
     });
 }
+
+// Modal de creación de tareas
+document.querySelectorAll('.task').forEach(taskEl => {
+    taskEl.addEventListener('click', (e) => {
+        if (e.target.closest('.delete-task')) return;
+
+        const taskId = taskEl.dataset.id;
+
+        fetch(`/tasks/${taskId}/edit`)
+            .then(response => response.json())
+            .then(data => {
+                const task = data.task;
+                const users = data.users;
+
+                document.getElementById('editTaskId').value = task.id;
+                document.getElementById('editTitle').value = task.title;
+                document.getElementById('editDescription').value = task.description || '';
+                document.getElementById('editStatus').value = task.status;
+                document.getElementById('editDueDate').value = task.due_date || '';
+
+                const assignedSelect = document.getElementById('editAssignedTo');
+                assignedSelect.innerHTML = '<option value="">Sin asignar</option>';
+                users.forEach(user => {
+                    assignedSelect.innerHTML += `<option value="${user.id}" ${user.id == task.assigned_to ? 'selected' : ''}>${user.name}</option>`;
+                });
+
+                openModal('editTaskModal');
+            });
+    });
+});
+
+document.getElementById('editTaskForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const taskId = document.getElementById('editTaskId').value;
+    const formData = new FormData(form);
+
+    fetch(`/tasks/${taskId}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json',
+        },
+        body: formData
+    })
+        .then(res => {
+            if (!res.ok) throw new Error('Error al actualizar');
+            return res.json();
+        })
+        .then(data => {
+            location.reload(); // Refrescar para ver cambios actualizados
+        })
+        .catch(err => {
+            alert('Error al actualizar la tarea');
+            console.error(err);
+        });
+});

@@ -32,7 +32,10 @@
                     <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
                         href="{{ route('dashboard')}}">Mis Equipos</a>
                     <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+                        href="{{ route('mytasks')}}">Mis Tareas</a>
+                    <a class="relative after:block after:h-[3px] after:w-full after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
                         href="{{ route('suscription')}}">Suscripciones</a>
+
                 </div>
 
                 <!-- Menú usuario -->
