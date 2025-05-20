@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @vite(['resources/js/taskboard.js'])
+    @vite(['resources/js/taskboard.js', 'resources/'])
 
     <div class="container mx-auto p-6 space-y-6">
         <!-- Titulo, Descripción y Gestionar -->
@@ -53,13 +53,13 @@
 
                     <!-- Filtro por estado -->
                     <select id="statusFilter" class="ml-4 border-gray-300 rounded-lg p-2 pr-8">
-                        <option value="">All</option>
-                        <option value="pending">Pending</option>
-                        <option value="in_progress">In progress</option>
-                        <option value="review">Review</option>
-                        <option value="paused">Paused</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
+                        <option value="">Todos</option>
+                        <option value="pending">Pendiente</option>
+                        <option value="in_progress">En progreso</option>
+                        <option value="review">Revisión</option>
+                        <option value="paused">Pausado</option>
+                        <option value="completed">Completado</option>
+                        <option value="cancelled">Cancelado</option>
                     </select>
                     <!-- Buscador de tareas -->
                     <input id="taskSearch" type="text" placeholder="Buscar tarea..."
@@ -172,12 +172,12 @@
                 <div class="mb-4">
                     <label for="taskStatus" class="block text-gray-700">Estado</label>
                     <select id="taskStatus" name="status" class="w-full px-4 py-2 border rounded-lg" required>
-                        <option value="pending">Pending</option>
-                        <option value="in_progress">In Progress</option>
-                        <option value="review">Review</option>
-                        <option value="paused">Paused</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
+                        <option value="pending">Pendiente</option>
+                        <option value="in_progress">En progreso</option>
+                        <option value="review">Revisión</option>
+                        <option value="paused">Pausado</option>
+                        <option value="completed">Completado</option>
+                        <option value="cancelled">Cancelado</option>
                     </select>
                 </div>
                 <div class="mb-4">

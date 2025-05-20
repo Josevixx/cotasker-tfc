@@ -6,6 +6,7 @@
     <div id='calendar' class="bg-white p-4 rounded shadow"></div>
 </div>
 <script>
+    /*
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
 
@@ -38,6 +39,8 @@
         });
 
         calendar.render();
+
+        */
 
 </script>
 
